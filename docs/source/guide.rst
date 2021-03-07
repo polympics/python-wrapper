@@ -155,6 +155,24 @@ You can similarly update a user's team:
    with the ``manage_own_team`` permission who is a member of the
    given team.
 
+You can also update user permissions with the ``grant_permissions``
+and ``revoke_permissions`` args, subject to the following rules:
+
+- You must be authenticated.
+- You cannot grant permissions you do not have.
+- You cannot grant ``authenticate_users``, since that's not a permission users can have.
+- You cannot grant permissions unless you have the ``manage_permissions`` permission, except as stated below:
+- You *can* grant the ``manage_own_team`` permission to other members of your own team (as long as you also have ``manage_own_team``).
+
+Example:
+
+.. code-block::python
+
+   await client.update_account(
+       account, grant_permissions=Permissions(manage_own_team=True),
+       revoke_permissions=Permissions(manage_teams=True)
+   )
+
 Deleting an account
 -------------------
 
@@ -267,7 +285,7 @@ human-readable name of the app.
 Get the authenticated app
 -------------------------
 
-When authenticated with an ``AppClient``, you can use ``get_app``` to get
+When authenticated with an ``AppClient``, you can use ``get_app`` to get
 metadata on the authenticated app. Note that unlike ``reset_token``, this
 does *not* return the app's new token.
 
