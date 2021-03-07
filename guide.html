@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.0.4 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Full API Documentation" href="api.html" />
+    <link rel="prev" title="Python Polympics API Wrapper" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Python Polympics Wrapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Intro to the Polympics API wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-client">Creating a client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-an-account">Getting an account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-a-team">Getting a team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listing-all-accounts">Listing all accounts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listing-all-teams">Listing all teams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-an-account">Creating an account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#editing-an-account">Editing an account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-an-account">Deleting an account</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-team">Creating a team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#editing-a-team">Editing a team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-a-team">Deleting a team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-user-auth-session">Create a user auth session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reset-the-client-s-token">Reset the client’s token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-authenticated-user">Getting the authenticated user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#errors">Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Full API Documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Python Polympics Wrapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Intro to the Polympics API wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="intro-to-the-polympics-api-wrapper">
+<h1>Intro to the Polympics API wrapper<a class="headerlink" href="#intro-to-the-polympics-api-wrapper" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creating-a-client">
+<h2>Creating a client<a class="headerlink" href="#creating-a-client" title="Permalink to this headline">¶</a></h2>
+<p>The first thing you need to do to use the API is create an API client. There are 3 types of client:</p>
+<ul class="simple">
+<li><p>Unauthenticated</p></li>
+<li><p>App-authenticated</p></li>
+<li><p>User-authenticated</p></li>
+</ul>
+<p>Creating an unauthenticated client is very simple:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">UnauthenticatedClient</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>However, if you want to do anything other than read-only operations,
+you’ll need to authenticate. To use app credentials, see the following
+example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="n">Credentials</span><span class="p">(</span><span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;YOUR-TOKEN-HERE&#39;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">AppClient</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Creating a user-authenticated client is very similar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="n">Credentials</span><span class="p">(</span><span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;YOUR-TOKEN-HERE&#39;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">UserClient</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All three clients take an additional parameter, <code class="docutils literal notranslate"><span class="pre">base_url</span></code>. This is
+the location at which the API is hosted, for example
+<code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:8000</span></code> or <code class="docutils literal notranslate"><span class="pre">https://api.polytopia.fun</span></code>.</p>
+</div>
+</div>
+<div class="section" id="getting-an-account">
+<h2>Getting an account<a class="headerlink" href="#getting-an-account" title="Permalink to this headline">¶</a></h2>
+<p>You can get an account by Discord ID using <code class="docutils literal notranslate"><span class="pre">get_account</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">12345678901234</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">permissions</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-a-team">
+<h2>Getting a team<a class="headerlink" href="#getting-a-team" title="Permalink to this headline">¶</a></h2>
+<p>You can get a team by ID using <code class="docutils literal notranslate"><span class="pre">get_team</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">team</span><span class="o">.</span><span class="n">member_count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listing-all-accounts">
+<h2>Listing all accounts<a class="headerlink" href="#listing-all-accounts" title="Permalink to this headline">¶</a></h2>
+<p>You can list all accounts using <code class="docutils literal notranslate"><span class="pre">list_accounts</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_accounts</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also get results a page at a time:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">accounts</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_accounts</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">accounts</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">search</span></code> and <code class="docutils literal notranslate"><span class="pre">team</span></code> parameters to narrow down results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Members from team </span><span class="si">{</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> with &quot;bob&quot; in their name:&#39;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_accounts</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listing-all-teams">
+<h2>Listing all teams<a class="headerlink" href="#listing-all-teams" title="Permalink to this headline">¶</a></h2>
+<p>You can list all teams using <code class="docutils literal notranslate"><span class="pre">list_teams</span></code>. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_teams</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This supports the same pagination system as <code class="docutils literal notranslate"><span class="pre">list_accounts</span></code>, as well
+as the <code class="docutils literal notranslate"><span class="pre">search</span></code> parameter:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">teams</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_teams</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">teams</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-an-account">
+<h2>Creating an account<a class="headerlink" href="#creating-an-account" title="Permalink to this headline">¶</a></h2>
+<p>Registering a user is a simple call to <code class="docutils literal notranslate"><span class="pre">create_account</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_account</span><span class="p">(</span>
+    <span class="n">discord_id</span><span class="o">=</span><span class="mi">1234567</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span>
+    <span class="n">team</span><span class="o">=</span><span class="n">team</span>
+<span class="p">)</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">display_name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">team</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission.</p>
+</div>
+</div>
+<div class="section" id="editing-an-account">
+<h2>Editing an account<a class="headerlink" href="#editing-an-account" title="Permalink to this headline">¶</a></h2>
+<p>Editing a user’s account can be done with <code class="docutils literal notranslate"><span class="pre">update_account</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">41129492792313</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">display_name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission.</p>
+</div>
+<p>You can similarly update a user’s team:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_account_teams</span></code> permission, or just a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>
+with the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission who is a member of the
+given team.</p>
+</div>
+</div>
+<div class="section" id="deleting-an-account">
+<h2>Deleting an account<a class="headerlink" href="#deleting-an-account" title="Permalink to this headline">¶</a></h2>
+<p>You can delete a user’s account with the <code class="docutils literal notranslate"><span class="pre">delete_account</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">124214913289</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">delete_account</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission.</p>
+</div>
+</div>
+<div class="section" id="creating-a-team">
+<h2>Creating a team<a class="headerlink" href="#creating-a-team" title="Permalink to this headline">¶</a></h2>
+<p>You can create a team using the <code class="docutils literal notranslate"><span class="pre">create_team</span></code> method. It accepts one
+parameter, <code class="docutils literal notranslate"><span class="pre">name</span></code>, for the team’s name:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_team</span><span class="p">(</span><span class="s1">&#39;Gods of Olympus&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Gods of Olympus&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_teams</span></code> permission.</p>
+</div>
+</div>
+<div class="section" id="editing-a-team">
+<h2>Editing a team<a class="headerlink" href="#editing-a-team" title="Permalink to this headline">¶</a></h2>
+<p>You can edit a team using the <code class="docutils literal notranslate"><span class="pre">update_team</span></code> method. It accepts the same
+<code class="docutils literal notranslate"><span class="pre">name</span></code> parameter as <code class="docutils literal notranslate"><span class="pre">create_team</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_team</span><span class="p">(</span><span class="n">team</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cool Kidz&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Cool Kidz&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_teams</span></code> permission, or just a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>
+with the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission who is a member of the
+given team.</p>
+</div>
+</div>
+<div class="section" id="deleting-a-team">
+<h2>Deleting a team<a class="headerlink" href="#deleting-a-team" title="Permalink to this headline">¶</a></h2>
+<p>You can delete a team with the <code class="docutils literal notranslate"><span class="pre">delete_team</span></code> method. It accepts a single
+argument, the team to delete:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">28</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">delete_team</span><span class="p">(</span><span class="n">team</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_teams</span></code> permission, or just a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>
+with the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission who is a member of the
+given team.</p>
+</div>
+</div>
+<div class="section" id="create-a-user-auth-session">
+<h2>Create a user auth session<a class="headerlink" href="#create-a-user-auth-session" title="Permalink to this headline">¶</a></h2>
+<p>An <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> can create user sessions, which can in turn be used by a
+<code class="docutils literal notranslate"><span class="pre">UserClient</span></code> as authentication. More usefully, user session can be passed
+to the frontend, so that the user they are for can manipulate the API
+client-side. Since an attacker intercepting these credentials could
+authenticate as the user, these have a short lifetime, by default 30 minutes.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">1318219824080</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">expires_at</span><span class="p">)</span>
+<span class="n">user_client</span> <span class="o">=</span> <span class="n">UserClient</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> with the <code class="docutils literal notranslate"><span class="pre">authenticate_users</span></code>
+permission.</p>
+</div>
+</div>
+<div class="section" id="reset-the-client-s-token">
+<h2>Reset the client’s token<a class="headerlink" href="#reset-the-client-s-token" title="Permalink to this headline">¶</a></h2>
+<p>The token of an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> can be reset using <code class="docutils literal notranslate"><span class="pre">reset_token</span></code>. Note that the
+client <em>will</em> automatically update to use the new token. This function returns
+an <code class="docutils literal notranslate"><span class="pre">App</span></code> object, which can be used in place of credentials, and also provides
+the attribute <code class="docutils literal notranslate"><span class="pre">name</span></code>, which is the human-readable name of the app.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">reset_token</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> (you cannot reset a user token, since
+they are short-lived anyway).</p>
+</div>
+</div>
+<div class="section" id="getting-the-authenticated-user">
+<h2>Getting the authenticated user<a class="headerlink" href="#getting-the-authenticated-user" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> can get the account of the user it has authenticated as
+using the <code class="docutils literal notranslate"><span class="pre">get_self</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_self</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>, since an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> has no associated
+user.</p>
+</div>
+</div>
+<div class="section" id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
+<p>If the API returns an error, the wrapper will raise a <code class="docutils literal notranslate"><span class="pre">PolympicsError</span></code>.
+This has the attributes <code class="docutils literal notranslate"><span class="pre">code</span></code> (the HTTP status code that was used, eg.
+<code class="docutils literal notranslate"><span class="pre">404</span></code> or <code class="docutils literal notranslate"><span class="pre">500</span></code>) and <code class="docutils literal notranslate"><span class="pre">detail</span></code> (a human-readable message indicating what
+went wrong).</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="api.html" class="btn btn-neutral float-right" title="Full API Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Python Polympics API Wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Artemis.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
