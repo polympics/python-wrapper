@@ -4,7 +4,10 @@ from typing import Any, Optional
 import aiohttp
 
 from .pagination import Paginator
-from .types import Account, App, Credentials, PolympicsError, Session, Team
+from .types import (
+    Account, App, AppCredentials, Credentials, Permissions, PolympicsError,
+    Session, Team
+)
 
 
 __all__ = ('UnauthenticatedClient', 'AppClient', 'UserClient')
@@ -110,7 +113,8 @@ class AuthenticatedClient(UnauthenticatedClient):
 
     async def update_account(
             self, account: Account, display_name: str = None,
-            team: Team = None):
+            team: Team = None, grant_permissions: Permissions = None,
+            revoke_permissions: Permissions = None):
         """Edit an account."""
         data = {}
         if display_name:
@@ -119,6 +123,11 @@ class AuthenticatedClient(UnauthenticatedClient):
         if team:
             account.team = team
             data['team'] = team.id
+        if grant_permissions:
+            account.permissions += grant_permissions
+            data['grant_permissions'] = grant_permissions.to_int()
+        if revoke_permissions:
+            account.permissions -= revoke_permissions
         await self.request(
             'PATCH', f'/account/{account.discord_id}', json=data
         )
@@ -152,11 +161,15 @@ class AppClient(AuthenticatedClient):
             'POST', f'/account/{account.discord_id}/session', Session
         )
 
-    async def reset_token(self) -> App:
+    async def reset_token(self) -> AppCredentials:
         """Reset the authenticated app's token."""
-        app = await self.request('POST', '/token/reset', App)
+        app = await self.request('POST', '/app/reset_token', App)
         self.auth = aiohttp.BasicAuth(app.username, app.password)
         return app
+
+    async def get_app(self) -> App:
+        """Get metadata on the authenticated app."""
+        return await self.request('GET', '/app', App)
 
 
 class UserClient(AuthenticatedClient):

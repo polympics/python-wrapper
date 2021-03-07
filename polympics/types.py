@@ -9,8 +9,8 @@ from dataclasses_json import config, dataclass_json
 
 
 __all__ = (
-    'Account', 'App', 'Credentials', 'Permissions', 'PolympicsError',
-    'Session', 'Team'
+    'Account', 'App', 'AppCredentials', 'Credentials', 'Permissions',
+    'PolympicsError', 'Session', 'Team'
 )
 
 
@@ -33,9 +33,10 @@ class Permissions:
             values.append(value & (1 << n))
         return cls(*values)
 
-    def to_int(self) -> int:
-        """Turn the permissions into a series of bit flags."""
-        permissions = [
+    @property
+    def values(self) -> list[bool]:
+        """Get the permissions as a list of bools."""
+        return [
             self.manage_permissions,
             self.manage_account_teams,
             self.manage_account_details,
@@ -43,10 +44,63 @@ class Permissions:
             self.authenticate_users,
             self.manage_own_team
         ]
+
+    def to_int(self) -> int:
+        """Turn the permissions into a series of bit flags."""
         value = 0
-        for n, permission in enumerate(permissions):
+        for n, permission in enumerate(self.values):
             value |= permission << n
         return value
+
+    def __lt__(self, other: Permissions) -> bool:
+        """Check if these permissions are a strict subset of another."""
+        differ = False
+        for ours, theirs in zip(self.values, other.value):
+            if ours and not theirs:
+                return False
+            if theirs and not ours:
+                differ = True
+        return differ
+
+    def __lte__(self, other: Permissions) -> bool:
+        """Check if these permissions are a subset or the same as another."""
+        return any(
+            ours and not theirs
+            for ours, theirs in zip(self.values, other.value)
+        )
+
+    def __gt__(self, other: Permissions) -> bool:
+        """Check if these permissions are a strict superset of another."""
+        return other < self
+
+    def __gte__(self, other: Permissions) -> bool:
+        """Check if these permissions are a superset or the same as others."""
+        return other <= self
+
+    def __eq__(self, other: Permissions) -> bool:
+        """Check if these permissions are the same as others."""
+        return all(
+            ours == theirs
+            for ours, theirs in zip(self.values, other.value)
+        )
+
+    def __or__(self, other: Permissions):
+        """Add other permissions to these."""
+        return Permissions.from_int(self.to_int() | other.to_int())
+
+    __add__ = __or__
+
+    def __invert__(self) -> Permissions:
+        """Get the opposite of these permissions."""
+        return Permissions.from_int(~self.to_int())
+
+    def __and__(self, other: Permissions) -> Permissions:
+        """Get all permissions specified in both this and other."""
+        return Permissions.from_int(self.to_int() & other.to_int())
+
+    def __sub__(self, other: Permissions) -> Permissions:
+        """Get all permissions specified in this but not other."""
+        return self & (~other)
 
 
 @dataclass_json
@@ -122,10 +176,17 @@ class Session(Credentials):
 
 @dataclass_json
 @dataclass
-class App(Credentials):
-    """Credentials and data for an app."""
+class App:
+    """Metadata for an app."""
 
+    username: str
     display_name: str
+
+
+@dataclass_json
+@dataclass
+class AppCredentials(Credentials, App):
+    """Credentials and data for an app."""
 
 
 @dataclass
