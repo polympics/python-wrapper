@@ -251,8 +251,9 @@ Reset the client's token
 
 The token of an ``AppClient`` can be reset using ``reset_token``. Note that the
 client *will* automatically update to use the new token. This function returns
-an ``App`` object, which can be used in place of credentials, and also provides
-the attribute ``name``, which is the human-readable name of the app.
+an ``AppCredentials`` object, which can be used in place of credentials,
+and also provides the attribute ``display_name``, which is the
+human-readable name of the app.
 
 .. code-block:: python
 
@@ -262,6 +263,22 @@ the attribute ``name``, which is the human-readable name of the app.
 
    This requires an ``AppClient`` (you cannot reset a user token, since
    they are short-lived anyway).
+
+Get the authenticated app
+-------------------------
+
+When authenticated with an ``AppClient``, you can use ``get_app``` to get
+metadata on the authenticated app. Note that unlike ``reset_token``, this
+does *not* return the app's new token.
+
+.. code-block:: python
+
+   app = await client.get_app()
+   print(app.display_name)
+
+.. note::
+
+   This requires an ``AppClient``.
 
 Getting the authenticated user
 ------------------------------
