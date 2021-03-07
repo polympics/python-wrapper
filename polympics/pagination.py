@@ -45,7 +45,7 @@ class Paginator:
         """Get a page of results (0-indexed)."""
         data = await self.client.request(
             self.method, self.path, params=self.params,
-            data_type=PaginatedResponse
+            response_type=PaginatedResponse
         )
         if self.data_type:
             values = data.parse_as(self.data_type)

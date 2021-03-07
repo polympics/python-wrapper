@@ -33,7 +33,7 @@ class UnauthenticatedClient:
         return self.client
 
     async def handle_response(
-            response: aiohttp.ClientResponse,
+            self, response: aiohttp.ClientResponse,
             data_type: Any = None) -> dict[str, Any]:
         """Process a response from the API."""
         if response.status == 500:

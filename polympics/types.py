@@ -59,8 +59,6 @@ class Team:
     created_at: datetime
     member_count: int
 
-    client: Any
-
 
 @dataclass_json
 @dataclass
