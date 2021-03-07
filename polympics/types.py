@@ -126,7 +126,6 @@ class App(Credentials):
     """Credentials and data for an app."""
 
     display_name: str
-    expires_at: datetime
 
 
 @dataclass

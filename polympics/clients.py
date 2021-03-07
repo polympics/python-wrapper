@@ -129,7 +129,7 @@ class AuthenticatedClient(UnauthenticatedClient):
 
     async def create_team(self, name: str) -> Team:
         """Create a new team."""
-        await self.request('POST', '/teams/new', json={
+        return await self.request('POST', '/teams/new', json={
             'name': name
         }, response_type=Team)
 

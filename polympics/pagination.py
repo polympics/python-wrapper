@@ -43,6 +43,7 @@ class Paginator:
 
     async def get_page(self, page_number: int) -> list[Any]:
         """Get a page of results (0-indexed)."""
+        self.params['page'] = page_number
         data = await self.client.request(
             self.method, self.path, params=self.params,
             response_type=PaginatedResponse
