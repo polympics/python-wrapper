@@ -311,6 +311,12 @@ and <code class="docutils literal notranslate"><span class="pre">revoke_permissi
 <li><p>You <em>can</em> grant the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission to other members of your own team (as long as you also have <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code>).</p></li>
 </ul>
 <p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
+    <span class="n">account</span><span class="p">,</span> <span class="n">grant_permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span><span class="n">manage_own_team</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">revoke_permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span><span class="n">manage_teams</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="deleting-an-account">
 <h2>Deleting an account<a class="headerlink" href="#deleting-an-account" title="Permalink to this headline">¶</a></h2>
