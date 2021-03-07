@@ -166,7 +166,7 @@ and ``revoke_permissions`` args, subject to the following rules:
 
 Example:
 
-.. code-block::python
+.. code-block:: python
 
    await client.update_account(
        account, grant_permissions=Permissions(manage_own_team=True),
