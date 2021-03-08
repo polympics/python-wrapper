@@ -9,8 +9,9 @@ from dataclasses_json import config, dataclass_json
 
 
 __all__ = (
-    'Account', 'App', 'AppCredentials', 'Credentials', 'Permissions',
-    'PolympicsError', 'Session', 'Team'
+    'Account', 'App', 'AppCredentials', 'ClientError', 'Credentials',
+    'DataError', 'Permissions', 'PolympicsError', 'ServerError', 'Session',
+    'Team'
 )
 
 
