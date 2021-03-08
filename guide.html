@@ -101,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#reset-the-client-s-token">Reset the client’s token</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-the-authenticated-app">Get the authenticated app</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-the-authenticated-user">Getting the authenticated user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#closing-the-connection">Closing the connection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#errors">Errors</a></li>
 </ul>
 </li>
@@ -276,6 +277,28 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
 <code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission.</p>
 </div>
+<p>You can also chose the permissions to grant the user:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_account</span><span class="p">(</span>
+    <span class="n">discord_id</span><span class="o">=</span><span class="mi">1234567</span><span class="p">,</span>
+    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span>
+    <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">,</span>
+    <span class="n">permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span>
+        <span class="n">manage_teams</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">manage_account_details</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In order to grant permissions to a user:</p>
+<ul class="simple">
+<li><p>You must be authenticated.</p></li>
+<li><p>You cannot grant permissions you do not have.</p></li>
+<li><p>You cannot grant <code class="docutils literal notranslate"><span class="pre">authenticate_users</span></code>, since that’s not a permission users can have.</p></li>
+<li><p>You cannot grant permissions unless you have the <code class="docutils literal notranslate"><span class="pre">manage_permissions</span></code> permission, except as stated below:</p></li>
+<li><p>You <em>can</em> grant the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission to other members of your own team (as long as you also have <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code>).</p></li>
+</ul>
+</div>
 </div>
 <div class="section" id="editing-an-account">
 <h2>Editing an account<a class="headerlink" href="#editing-an-account" title="Permalink to this headline">¶</a></h2>
@@ -302,14 +325,8 @@ with the <code class="docutils literal notranslate"><span class="pre">manage_own
 given team.</p>
 </div>
 <p>You can also update user permissions with the <code class="docutils literal notranslate"><span class="pre">grant_permissions</span></code>
-and <code class="docutils literal notranslate"><span class="pre">revoke_permissions</span></code> args, subject to the following rules:</p>
-<ul class="simple">
-<li><p>You must be authenticated.</p></li>
-<li><p>You cannot grant permissions you do not have.</p></li>
-<li><p>You cannot grant <code class="docutils literal notranslate"><span class="pre">authenticate_users</span></code>, since that’s not a permission users can have.</p></li>
-<li><p>You cannot grant permissions unless you have the <code class="docutils literal notranslate"><span class="pre">manage_permissions</span></code> permission, except as stated below:</p></li>
-<li><p>You <em>can</em> grant the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission to other members of your own team (as long as you also have <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code>).</p></li>
-</ul>
+and <code class="docutils literal notranslate"><span class="pre">revoke_permissions</span></code> args, subject to the rules outlined in
+“Creating an account”.</p>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
     <span class="n">account</span><span class="p">,</span> <span class="n">grant_permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span><span class="n">manage_own_team</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
@@ -442,12 +459,30 @@ using the <code class="docutils literal notranslate"><span class="pre">get_self<
 user.</p>
 </div>
 </div>
+<div class="section" id="closing-the-connection">
+<h2>Closing the connection<a class="headerlink" href="#closing-the-connection" title="Permalink to this headline">¶</a></h2>
+<p>Before exiting, your app should call the <code class="docutils literal notranslate"><span class="pre">close</span></code> method of any clients you
+have opened:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="errors">
 <h2>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
 <p>If the API returns an error, the wrapper will raise a <code class="docutils literal notranslate"><span class="pre">PolympicsError</span></code>.
-This has the attributes <code class="docutils literal notranslate"><span class="pre">code</span></code> (the HTTP status code that was used, eg.
-<code class="docutils literal notranslate"><span class="pre">404</span></code> or <code class="docutils literal notranslate"><span class="pre">500</span></code>) and <code class="docutils literal notranslate"><span class="pre">detail</span></code> (a human-readable message indicating what
-went wrong).</p>
+This has the <code class="docutils literal notranslate"><span class="pre">code</span></code> attribute (the HTTP status code that was used, eg.
+<code class="docutils literal notranslate"><span class="pre">404</span></code> or <code class="docutils literal notranslate"><span class="pre">500</span></code>).</p>
+<p>There are also the following subclasses:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ServerError</span></code> indicates a server-side issue that it may be beyond the
+client’s capability to resolve.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DataError</span></code> indicates an issue in the parameters passed to the API. This
+could indicate an issue in the library, but it will also be raised when a
+resource is not found. The <code class="docutils literal notranslate"><span class="pre">issues</span></code> attribute gives more detail, which can
+also be seen in the string representation of the error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ClientError</span></code> indicates a client-side issue not covered by <code class="docutils literal notranslate"><span class="pre">DataError</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">detail</span></code> attribute gives more information, in a human-readable format.</p></li>
+</ul>
 </div>
 </div>
 
