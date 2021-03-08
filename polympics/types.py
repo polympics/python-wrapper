@@ -18,19 +18,19 @@ __all__ = (
 class Permissions:
     """Permissions, returned as bit flags by the API."""
 
-    manage_permissions: bool
-    manage_account_teams: bool
-    manage_account_details: bool
-    manage_teams: bool
-    authenticate_users: bool
-    manage_own_team: bool
+    manage_permissions: bool = False
+    manage_account_teams: bool = False
+    manage_account_details: bool = False
+    manage_teams: bool = False
+    authenticate_users: bool = False
+    manage_own_team: bool = False
 
     @classmethod
     def from_int(cls, value: int) -> Permissions:
         """Parse permissions from a series of bit flags."""
         values = []
         for n in range(6):
-            values.append(value & (1 << n))
+            values.append(bool(value & (1 << n)))
         return cls(*values)
 
     @property
@@ -84,7 +84,7 @@ class Permissions:
             for ours, theirs in zip(self.values, other.value)
         )
 
-    def __or__(self, other: Permissions):
+    def __or__(self, other: Permissions) -> Permissions:
         """Add other permissions to these."""
         return Permissions.from_int(self.to_int() | other.to_int())
 
@@ -100,7 +100,7 @@ class Permissions:
 
     def __sub__(self, other: Permissions) -> Permissions:
         """Get all permissions specified in this but not other."""
-        return self & (~other)
+        return Permissions.from_int(self.to_int() & (~other.to_int()))
 
 
 @dataclass_json
@@ -194,6 +194,41 @@ class PolympicsError(Exception):
     """An error returned by the API."""
 
     code: int
+
+    def __str__(self) -> str:
+        """Show this error as a string."""
+        return f'Polympics error: {self.code}'
+
+
+class ServerError(PolympicsError):
+    """An error on the server-side."""
+
+    def __str__(self) -> str:
+        """Show this error as a string."""
+        return f'{self.code}: Internal server error'
+
+
+@dataclass
+class DataError(PolympicsError):
+    """An error present in the data passed to the server."""
+
+    issues: list[dict[str, Any]]
+
+    def __str__(self) -> str:
+        """Show this error as a string."""
+        lines = [f'{self.code}: {len(self.issues)} data validation error/s:']
+        for issue in self.issues:
+            lines.append('  {path}: {msg} ({type})'.format(
+                path=' -> '.join(issue['loc']),
+                msg=issue['msg'], type=issue['type']
+            ))
+        return '\n'.join(lines)
+
+
+@dataclass
+class ClientError(PolympicsError):
+    """A different client-resolvable error."""
+
     detail: str
 
     def __str__(self) -> str:

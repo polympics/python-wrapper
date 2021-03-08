@@ -126,6 +126,29 @@ Registering a user is a simple call to ``create_account``:
    This requires an ``AppClient`` or ``UserClient`` with the
    ``manage_account_details`` permission.
 
+You can also chose the permissions to grant the user:
+
+.. code-block:: python
+
+   account = await client.create_account(
+       discord_id=1234567,
+       display_name='Artemis',
+       team=team,
+       permissions=Permissions(
+           manage_teams=True, manage_account_details=True
+       )
+   )
+
+.. note::
+
+   In order to grant permissions to a user:
+
+   - You must be authenticated.
+   - You cannot grant permissions you do not have.
+   - You cannot grant ``authenticate_users``, since that's not a permission users can have.
+   - You cannot grant permissions unless you have the ``manage_permissions`` permission, except as stated below:
+   - You *can* grant the ``manage_own_team`` permission to other members of your own team (as long as you also have ``manage_own_team``).
+
 Editing an account
 ------------------
 
@@ -156,13 +179,8 @@ You can similarly update a user's team:
    given team.
 
 You can also update user permissions with the ``grant_permissions``
-and ``revoke_permissions`` args, subject to the following rules:
-
-- You must be authenticated.
-- You cannot grant permissions you do not have.
-- You cannot grant ``authenticate_users``, since that's not a permission users can have.
-- You cannot grant permissions unless you have the ``manage_permissions`` permission, except as stated below:
-- You *can* grant the ``manage_own_team`` permission to other members of your own team (as long as you also have ``manage_own_team``).
+and ``revoke_permissions`` args, subject to the rules outlined in
+"Creating an account".
 
 Example:
 
@@ -314,10 +332,30 @@ using the ``get_self`` method:
    This requires a ``UserClient``, since an ``AppClient`` has no associated
    user.
 
+Closing the connection
+----------------------
+
+Before exiting, your app should call the ``close`` method of any clients you
+have opened:
+
+.. code-block:: python
+
+   await client.close()
+
 Errors
 ------
 
 If the API returns an error, the wrapper will raise a ``PolympicsError``.
-This has the attributes ``code`` (the HTTP status code that was used, eg.
-``404`` or ``500``) and ``detail`` (a human-readable message indicating what
-went wrong).
+This has the ``code`` attribute (the HTTP status code that was used, eg.
+``404`` or ``500``).
+
+There are also the following subclasses:
+
+- ``ServerError`` indicates a server-side issue that it may be beyond the
+  client's capability to resolve.
+- ``DataError`` indicates an issue in the parameters passed to the API. This
+  could indicate an issue in the library, but it will also be raised when a
+  resource is not found. The ``issues`` attribute gives more detail, which can
+  also be seen in the string representation of the error.
+- ``ClientError`` indicates a client-side issue not covered by ``DataError``.
+  The ``detail`` attribute gives more information, in a human-readable format.

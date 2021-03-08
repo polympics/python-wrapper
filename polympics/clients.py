@@ -5,8 +5,8 @@ import aiohttp
 
 from .pagination import Paginator
 from .types import (
-    Account, App, AppCredentials, Credentials, Permissions, PolympicsError,
-    Session, Team
+    Account, App, AppCredentials, ClientError, Credentials, DataError,
+    Permissions, ServerError, Session, Team
 )
 
 
@@ -40,7 +40,7 @@ class UnauthenticatedClient:
             data_type: Any = None) -> dict[str, Any]:
         """Process a response from the API."""
         if response.status == 500:
-            raise PolympicsError(500, 'Internal server error.')
+            raise ServerError(500)
         if response.status == 204:
             return {}
         data = await response.json()
@@ -48,8 +48,10 @@ class UnauthenticatedClient:
             if data_type:
                 return data_type.from_dict(data)
             return data
+        elif response.status == 422:
+            raise DataError(422, data['detail'])
         else:
-            raise PolympicsError(response.status, data['detail'])
+            raise ClientError(response.status, data['detail'])
 
     async def request(
             self, method: str, path: str, response_type: Any = None,
@@ -98,17 +100,23 @@ class UnauthenticatedClient:
             data_type=Team
         )
 
+    async def close(self):
+        """Close the connection."""
+        await self.client.close()
+
 
 class AuthenticatedClient(UnauthenticatedClient):
     """Client that adds endpoints only available when authenticated."""
 
     async def create_account(
-            self, discord_id: int, display_name: str, team: Team) -> Account:
+            self, discord_id: int, display_name: str, team: Team,
+            permissions: Permissions = None) -> Account:
         """Create a new account."""
         return await self.request('POST', '/accounts/signup', json={
             'discord_id': discord_id,
             'display_name': display_name,
-            'team': team.id
+            'team': team.id,
+            'permissions': permissions.to_int() if permissions else 0
         }, response_type=Account)
 
     async def update_account(
@@ -163,8 +171,9 @@ class AppClient(AuthenticatedClient):
 
     async def reset_token(self) -> AppCredentials:
         """Reset the authenticated app's token."""
-        app = await self.request('POST', '/app/reset_token', App)
+        app = await self.request('POST', '/app/reset_token', AppCredentials)
         self.auth = aiohttp.BasicAuth(app.username, app.password)
+        await self.client.close()
         return app
 
     async def get_app(self) -> App:
