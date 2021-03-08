@@ -1,5 +1,3 @@
-:ref:`search`
-
 Python Polympics API Wrapper
 ============================
 

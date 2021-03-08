@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Full API Documentation &mdash; Python Polympics Wrapper 0.0.4 documentation</title>
+  <title>Full API Documentation &mdash; Python Polympics Wrapper 0.2.1 documentation</title>
   
 
   
@@ -266,10 +266,22 @@
 <dd><p>Credentials and data for an app.</p>
 </dd></dl>
 
+<dl class="py exception">
+<dt id="polympics.types.ClientError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">ClientError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detail</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.ClientError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A different client-resolvable error.</p>
+</dd></dl>
+
 <dl class="py class">
 <dt id="polympics.types.Credentials">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">Credentials</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.Credentials" title="Permalink to this definition">¶</a></dt>
 <dd><p>Credentials for a user session or app.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="polympics.types.DataError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">DataError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issues</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.DataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error present in the data passed to the server.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -300,6 +312,12 @@
 <dt id="polympics.types.PolympicsError">
 <em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">PolympicsError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.PolympicsError" title="Permalink to this definition">¶</a></dt>
 <dd><p>An error returned by the API.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt id="polympics.types.ServerError">
+<em class="property"><span class="pre">exception</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">ServerError</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.ServerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error on the server-side.</p>
 </dd></dl>
 
 <dl class="py class">
