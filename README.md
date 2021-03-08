@@ -33,4 +33,4 @@ Automated testing requires having a server set up on `127.0.0.1:8000`. See [the 
 
 ## Usage
 
-TODO: Add docs
+[Docs are available here](https://polympics.github.io/python-wrapper).

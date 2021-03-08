@@ -1,6 +1,6 @@
 name: Build and Upload to PyPI
 
-on: 
+on:
   push:
     branches:
       - main
