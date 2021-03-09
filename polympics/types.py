@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 from dataclasses_json import config, dataclass_json
 
@@ -122,12 +122,14 @@ class Account:
 
     discord_id: int
     display_name: str
-    team: Team
+    discriminator: int
+    created_at: datetime
     permissions: Permissions = field(metadata=config(
         encoder=Permissions.to_int,
         decoder=Permissions.from_int
     ))
-    created_at: datetime
+    avatar_url: Optional[str] = None
+    team: Optional[Team] = None
 
 
 @dataclass_json

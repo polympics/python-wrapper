@@ -109,18 +109,22 @@ class AuthenticatedClient(UnauthenticatedClient):
     """Client that adds endpoints only available when authenticated."""
 
     async def create_account(
-            self, discord_id: int, display_name: str, team: Team,
-            permissions: Permissions = None) -> Account:
+            self, discord_id: int, display_name: str, discriminator: int,
+            avatar_url: Optional[str] = None, team: Optional[Team] = None,
+            permissions: Optional[Permissions] = None) -> Account:
         """Create a new account."""
         return await self.request('POST', '/accounts/signup', json={
             'discord_id': discord_id,
             'display_name': display_name,
-            'team': team.id,
+            'discriminator': discriminator,
+            'avatar_url': avatar_url,
+            'team': team.id if team else None,
             'permissions': permissions.to_int() if permissions else 0
         }, response_type=Account)
 
     async def update_account(
             self, account: Account, display_name: str = None,
+            discriminator: int = None, avatar_url: str = None,
             team: Team = None, grant_permissions: Permissions = None,
             revoke_permissions: Permissions = None):
         """Edit an account."""
@@ -128,6 +132,12 @@ class AuthenticatedClient(UnauthenticatedClient):
         if display_name:
             account.display_name = display_name
             data['display_name'] = display_name
+        if discriminator:
+            account.discriminator = discriminator
+            data['discriminator'] = discriminator
+        if avatar_url:
+            account.avatar_url = avatar_url
+            data['avatar_url'] = avatar_url
         if team:
             account.team = team
             data['team'] = team.id
