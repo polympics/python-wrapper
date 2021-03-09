@@ -116,6 +116,8 @@ Registering a user is a simple call to ``create_account``:
    account = await client.create_account(
        discord_id=1234567,
        display_name='Artemis',
+       discriminator=8472,
+       avatar_url='https://picsum.photos/200',
        team=team
    )
    assert account.display_name == 'Artemis'
@@ -157,7 +159,9 @@ Editing a user's account can be done with ``update_account``:
 .. code-block:: python
 
    account = await client.get_account(41129492792313)
-   await client.update_account(account, display_name='Artemis')
+   await client.update_account(
+      account, display_name='Artemis', discriminator=1231
+   )
    assert account.display_name == 'Artemis'
 
 .. note::
