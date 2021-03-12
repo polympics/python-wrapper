@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Optional
 
-from dataclasses_json import config, dataclass_json
+from dataclasses_json import DataClassJsonMixin, config, dataclass_json
 
 
 __all__ = (
@@ -115,9 +115,8 @@ class Team:
     member_count: int
 
 
-@dataclass_json
 @dataclass
-class Account:
+class Account(DataClassJsonMixin):
     """An account returned by the API."""
 
     discord_id: int
@@ -130,6 +129,13 @@ class Account:
     ))
     avatar_url: Optional[str] = None
     team: Optional[Team] = None
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]):
+        """Ensure the Discord ID is an int."""
+        account = super().from_dict(data)
+        account.discord_id = int(account.discord_id)
+        return account
 
 
 @dataclass_json
