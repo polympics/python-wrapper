@@ -159,7 +159,7 @@ Editing a user's account can be done with ``update_account``:
 .. code-block:: python
 
    account = await client.get_account(41129492792313)
-   await client.update_account(
+   account = await client.update_account(
       account, display_name='Artemis', discriminator=1231
    )
    assert account.display_name == 'Artemis'
@@ -235,7 +235,7 @@ You can edit a team using the ``update_team`` method. It accepts the same
 .. code-block:: python
 
    team = await client.get_team(13)
-   await client.update_team(team, name='Cool Kidz')
+   team = await client.update_team(team, name='Cool Kidz')
    assert team.name == 'Cool Kidz'
 
 .. note::

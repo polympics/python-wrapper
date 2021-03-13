@@ -126,28 +126,24 @@ class AuthenticatedClient(UnauthenticatedClient):
             self, account: Account, display_name: str = None,
             discriminator: int = None, avatar_url: str = None,
             team: Team = None, grant_permissions: Permissions = None,
-            revoke_permissions: Permissions = None):
+            revoke_permissions: Permissions = None) -> Account:
         """Edit an account."""
         data = {}
         if display_name:
-            account.display_name = display_name
             data['display_name'] = display_name
         if discriminator:
-            account.discriminator = discriminator
             data['discriminator'] = discriminator
         if avatar_url:
-            account.avatar_url = avatar_url
             data['avatar_url'] = avatar_url
         if team:
-            account.team = team
             data['team'] = team.id
         if grant_permissions:
-            account.permissions += grant_permissions
             data['grant_permissions'] = grant_permissions.to_int()
         if revoke_permissions:
-            account.permissions -= revoke_permissions
-        await self.request(
-            'PATCH', f'/account/{account.discord_id}', json=data
+            data['revoke_permissions'] = revoke_permissions.to_int()
+        return await self.request(
+            'PATCH', f'/account/{account.discord_id}', json=data,
+            response_type=Account
         )
 
     async def delete_account(self, account: Account):
@@ -160,10 +156,12 @@ class AuthenticatedClient(UnauthenticatedClient):
             'name': name
         }, response_type=Team)
 
-    async def update_team(self, team: Team, name: str):
+    async def update_team(self, team: Team, name: str) -> Team:
         """Edit a team's name."""
-        team.name = name
-        await self.request('PATCH', f'/team/{team.id}', json={'name': name})
+        return await self.request(
+            'PATCH', f'/team/{team.id}', json={'name': name},
+            response_type=Team
+        )
 
     async def delete_team(self, team: Team):
         """Delete a team."""
