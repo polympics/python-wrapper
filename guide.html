@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.3.1 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.3.2 documentation</title>
   
 
   
@@ -306,7 +306,7 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <h2>Editing an account<a class="headerlink" href="#editing-an-account" title="Permalink to this headline">¶</a></h2>
 <p>Editing a user’s account can be done with <code class="docutils literal notranslate"><span class="pre">update_account</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">41129492792313</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
+<span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
    <span class="n">account</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span> <span class="n">discriminator</span><span class="o">=</span><span class="mi">1231</span>
 <span class="p">)</span>
 <span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">display_name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
@@ -371,7 +371,7 @@ parameter, <code class="docutils literal notranslate"><span class="pre">name</sp
 <p>You can edit a team using the <code class="docutils literal notranslate"><span class="pre">update_team</span></code> method. It accepts the same
 <code class="docutils literal notranslate"><span class="pre">name</span></code> parameter as <code class="docutils literal notranslate"><span class="pre">create_team</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
-<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_team</span><span class="p">(</span><span class="n">team</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cool Kidz&#39;</span><span class="p">)</span>
+<span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_team</span><span class="p">(</span><span class="n">team</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Cool Kidz&#39;</span><span class="p">)</span>
 <span class="k">assert</span> <span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Cool Kidz&#39;</span>
 </pre></div>
 </div>
