@@ -27,10 +27,6 @@ To additionally install development dependencies, do
 $ pipenv install -d
 ```
 
-## Testing
-
-Automated testing requires having a server set up on `127.0.0.1:8000`. See [the server repo](https://github.com/polympics/server) for instructions on how to set this up.
-
 ## Usage
 
 [Docs are available here](https://polympics.github.io/python-wrapper).

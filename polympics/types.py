@@ -119,9 +119,9 @@ class Team:
 class Account(DataClassJsonMixin):
     """An account returned by the API."""
 
-    discord_id: int
-    display_name: str
-    discriminator: int
+    id: int
+    name: str
+    discriminator: str
     created_at: datetime
     permissions: Permissions = field(metadata=config(
         encoder=Permissions.to_int,
@@ -134,7 +134,7 @@ class Account(DataClassJsonMixin):
     def from_dict(cls, data: dict[str, Any]):
         """Ensure the Discord ID is an int."""
         account = super().from_dict(data)
-        account.discord_id = int(account.discord_id)
+        account.id = int(account.id)
         return account
 
 
@@ -189,7 +189,7 @@ class App:
     """Metadata for an app."""
 
     username: str
-    display_name: str
+    name: str
 
 
 @dataclass_json

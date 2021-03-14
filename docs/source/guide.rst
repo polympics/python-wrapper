@@ -29,7 +29,7 @@ Creating a user-authenticated client is very similar:
 
 .. code-block:: python
 
-   credentials = Credentials('A3', 'YOUR-TOKEN-HERE')
+   credentials = Credentials('S3', 'YOUR-TOKEN-HERE')
    client = UserClient(credentials)
 
 .. note::
@@ -45,8 +45,8 @@ You can get an account by Discord ID using ``get_account``. For example:
 
 .. code-block:: python
 
-   account = client.get_account(12345678901234)
-   print(account.display_name)
+   account = await client.get_account(12345678901234)
+   print(account.name)
    print(account.permissions)
    print(account.team.name)
 
@@ -57,7 +57,7 @@ You can get a team by ID using ``get_team``. For example:
 
 .. code-block:: python
 
-   team = client.get_team(31)
+   team = await client.get_team(31)
    print(team.name)
    print(team.member_count)
 
@@ -69,7 +69,7 @@ You can list all accounts using ``list_accounts``. For example:
 .. code-block:: python
 
    async for account in client.list_accounts():
-       print(account.display_name)
+       print(account.name)
 
 You can also get results a page at a time:
 
@@ -77,7 +77,7 @@ You can also get results a page at a time:
 
    accounts = client.list_accounts()
    for account in await accounts.get_page(0):
-       print(account.display_name)
+       print(account.name)
 
 You can use the ``search`` and ``team`` parameters to narrow down results.
 
@@ -85,7 +85,7 @@ You can use the ``search`` and ``team`` parameters to narrow down results.
 
     print(f'Members from team {team.name} with "bob" in their name:')
     async for account in client.list_accounts('bob', team=team):
-        print(account.display_name)
+        print(account.name)
 
 Listing all teams
 -----------------
@@ -114,13 +114,13 @@ Registering a user is a simple call to ``create_account``:
 
    team = await client.get_team(5)
    account = await client.create_account(
-       discord_id=1234567,
-       display_name='Artemis',
-       discriminator=8472,
+       id=1234567,
+       name='Artemis',
+       discriminator='8472',
        avatar_url='https://picsum.photos/200',
        team=team
    )
-   assert account.display_name == 'Artemis'
+   assert account.name == 'Artemis'
    assert account.team.id == 5
 
 .. note::
@@ -133,8 +133,9 @@ You can also chose the permissions to grant the user:
 .. code-block:: python
 
    account = await client.create_account(
-       discord_id=1234567,
-       display_name='Artemis',
+       id=1234567,
+       name='Artemis',
+       discriminator='8472',
        team=team,
        permissions=Permissions(
            manage_teams=True, manage_account_details=True
@@ -160,9 +161,9 @@ Editing a user's account can be done with ``update_account``:
 
    account = await client.get_account(41129492792313)
    account = await client.update_account(
-      account, display_name='Artemis', discriminator=1231
+      account, name='Artemis', discriminator='1231'
    )
-   assert account.display_name == 'Artemis'
+   assert account.name == 'Artemis'
 
 .. note::
 
@@ -263,14 +264,13 @@ argument, the team to delete:
    with the ``manage_own_team`` permission who is a member of the
    given team.
 
-Create a user auth session
---------------------------
+Creating a user auth session
+----------------------------
 
 An ``AppClient`` can create user sessions, which can in turn be used by a
 ``UserClient`` as authentication. More usefully, user session can be passed
 to the frontend, so that the user they are for can manipulate the API
-client-side. Since an attacker intercepting these credentials could
-authenticate as the user, these have a short lifetime, by default 30 minutes.
+client-side.
 
 Example:
 
@@ -286,14 +286,32 @@ Example:
    This requires an ``AppClient`` with the ``authenticate_users``
    permission.
 
-Reset the client's token
-------------------------
+Authenticating via Discord OAuth2
+---------------------------------
 
-The token of an ``AppClient`` can be reset using ``reset_token``. Note that the
-client *will* automatically update to use the new token. This function returns
-an ``AppCredentials`` object, which can be used in place of credentials,
-and also provides the attribute ``display_name``, which is the
-human-readable name of the app.
+Alternatively, you can use a Discord user authentication token to create a
+user session (these can be obtained using Discord OAuth2, which is beyond the
+scope of this library). This has the advantage that you do not need to be
+otherwise authenticated, so it can be used on the frontend (eg. with the OAuth2
+implicit grant flow).
+
+Example:
+
+.. code-block:: python
+
+   session = await client.discord_authenticate(token)
+   user_client = UserClient(session)
+
+Note that the token used must be authorised for the ``identify`` scope.
+
+Resetting the client's token
+----------------------------
+
+The token of an ``AppClient`` or ``UserClient`` can be reset using
+``reset_token``. Note that the client *will* automatically update to use the
+new token. This function returns an ``AppCredentials`` object for an
+``AppClient``, or a ``Session`` object for a ``UserClient``, either of which
+can be used in place of credentials, and also provide some metadata.
 
 .. code-block:: python
 
@@ -301,40 +319,30 @@ human-readable name of the app.
 
 .. note::
 
-   This requires an ``AppClient`` (you cannot reset a user token, since
-   they are short-lived anyway).
+   This requires an ``AppClient`` or ``UserClient``.
 
-Get the authenticated app
--------------------------
+Getting the authenticated app
+-----------------------------
 
-When authenticated with an ``AppClient``, you can use ``get_app`` to get
+When authenticated with an ``AppClient``, you can use ``get_self`` to get
 metadata on the authenticated app. Note that unlike ``reset_token``, this
 does *not* return the app's new token.
 
 .. code-block:: python
 
-   app = await client.get_app()
-   print(app.display_name)
-
-.. note::
-
-   This requires an ``AppClient``.
+   app = await client.get_self()
+   print(app.name)
 
 Getting the authenticated user
 ------------------------------
 
 A ``UserClient`` can get the account of the user it has authenticated as
-using the ``get_self`` method:
+using the same method:
 
 .. code-block:: python
 
    account = await client.get_self()
-   print(account.display_name)
-
-.. note::
-
-   This requires a ``UserClient``, since an ``AppClient`` has no associated
-   user.
+   print(account.name)
 
 Closing the connection
 ----------------------

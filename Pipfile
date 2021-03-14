@@ -3,6 +3,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[scripts]
+build-docs = "cd docs && sphinx-build source build && cd .."
+
 [packages]
 aiohttp = "*"
 dataclasses-json = "*"
