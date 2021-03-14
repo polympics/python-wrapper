@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Full API Documentation &mdash; Python Polympics Wrapper 0.3.2 documentation</title>
+  <title>Full API Documentation &mdash; Python Polympics Wrapper 0.4.0 documentation</title>
   
 
   
@@ -167,8 +167,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="polympics.clients.AppClient.get_app">
-<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_app</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.App" title="polympics.types.App"><span class="pre">polympics.types.App</span></a><a class="headerlink" href="#polympics.clients.AppClient.get_app" title="Permalink to this definition">¶</a></dt>
+<dt id="polympics.clients.AppClient.get_self">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_self</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.App" title="polympics.types.App"><span class="pre">polympics.types.App</span></a><a class="headerlink" href="#polympics.clients.AppClient.get_self" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get metadata on the authenticated app.</p>
 </dd></dl>
 
@@ -191,8 +191,14 @@
 </dd></dl>
 
 <dl class="py method">
+<dt id="polympics.clients.UnauthenticatedClient.discord_authenticate">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">discord_authenticate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Session" title="polympics.types.Session"><span class="pre">polympics.types.Session</span></a><a class="headerlink" href="#polympics.clients.UnauthenticatedClient.discord_authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a session from a Discord user token.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="polympics.clients.UnauthenticatedClient.get_account">
-<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_account</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discord_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Account" title="polympics.types.Account"><span class="pre">polympics.types.Account</span></a><a class="headerlink" href="#polympics.clients.UnauthenticatedClient.get_account" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_account</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Account" title="polympics.types.Account"><span class="pre">polympics.types.Account</span></a><a class="headerlink" href="#polympics.clients.UnauthenticatedClient.get_account" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an account by Discord ID.</p>
 </dd></dl>
 
@@ -242,7 +248,12 @@
 <dt id="polympics.clients.UserClient.get_self">
 <em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_self</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Account" title="polympics.types.Account"><span class="pre">polympics.types.Account</span></a><a class="headerlink" href="#polympics.clients.UserClient.get_self" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the account our credentials authenticate us for.</p>
-<p>Errors if using no credentials or app credentials.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="polympics.clients.UserClient.reset_token">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">reset_token</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Session" title="polympics.types.Session"><span class="pre">polympics.types.Session</span></a><a class="headerlink" href="#polympics.clients.UserClient.reset_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the session token.</p>
 </dd></dl>
 
 </dd></dl>
@@ -250,7 +261,7 @@
 <span class="target" id="module-polympics.types"></span><p>Dataclasses to represent the various types returned by the API.</p>
 <dl class="py class">
 <dt id="polympics.types.Account">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">Account</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">discord_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discriminator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">datetime.datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.Permissions" title="polympics.types.Permissions"><span class="pre">polympics.types.Permissions</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">avatar_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">team</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#polympics.types.Team" title="polympics.types.Team"><span class="pre">polympics.types.Team</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.Account" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">Account</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discriminator</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created_at</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">datetime.datetime</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permissions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.Permissions" title="polympics.types.Permissions"><span class="pre">polympics.types.Permissions</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">avatar_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">team</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#polympics.types.Team" title="polympics.types.Team"><span class="pre">polympics.types.Team</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.Account" title="Permalink to this definition">¶</a></dt>
 <dd><p>An account returned by the API.</p>
 <dl class="py method">
 <dt id="polympics.types.Account.from_dict">
@@ -262,13 +273,13 @@
 
 <dl class="py class">
 <dt id="polympics.types.App">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">App</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.App" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">App</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.App" title="Permalink to this definition">¶</a></dt>
 <dd><p>Metadata for an app.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="polympics.types.AppCredentials">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">AppCredentials</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.AppCredentials" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">polympics.types.</span></code><code class="sig-name descname"><span class="pre">AppCredentials</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.AppCredentials" title="Permalink to this definition">¶</a></dt>
 <dd><p>Credentials and data for an app.</p>
 </dd></dl>
 

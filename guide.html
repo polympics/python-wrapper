@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.3.2 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.4.0 documentation</title>
   
 
   
@@ -97,9 +97,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-team">Creating a team</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#editing-a-team">Editing a team</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deleting-a-team">Deleting a team</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#create-a-user-auth-session">Create a user auth session</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reset-the-client-s-token">Reset the client’s token</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#get-the-authenticated-app">Get the authenticated app</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-user-auth-session">Creating a user auth session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authenticating-via-discord-oauth2">Authenticating via Discord OAuth2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resetting-the-client-s-token">Resetting the client’s token</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-authenticated-app">Getting the authenticated app</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-the-authenticated-user">Getting the authenticated user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#closing-the-connection">Closing the connection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#errors">Errors</a></li>
@@ -195,7 +196,7 @@ example:</p>
 </pre></div>
 </div>
 <p>Creating a user-authenticated client is very similar:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="n">Credentials</span><span class="p">(</span><span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;YOUR-TOKEN-HERE&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">credentials</span> <span class="o">=</span> <span class="n">Credentials</span><span class="p">(</span><span class="s1">&#39;S3&#39;</span><span class="p">,</span> <span class="s1">&#39;YOUR-TOKEN-HERE&#39;</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">UserClient</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -209,8 +210,8 @@ the location at which the API is hosted, for example
 <div class="section" id="getting-an-account">
 <h2>Getting an account<a class="headerlink" href="#getting-an-account" title="Permalink to this headline">¶</a></h2>
 <p>You can get an account by Discord ID using <code class="docutils literal notranslate"><span class="pre">get_account</span></code>. For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">12345678901234</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">12345678901234</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">permissions</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
@@ -219,7 +220,7 @@ the location at which the API is hosted, for example
 <div class="section" id="getting-a-team">
 <h2>Getting a team<a class="headerlink" href="#getting-a-team" title="Permalink to this headline">¶</a></h2>
 <p>You can get a team by ID using <code class="docutils literal notranslate"><span class="pre">get_team</span></code>. For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">31</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">team</span><span class="o">.</span><span class="n">member_count</span><span class="p">)</span>
 </pre></div>
@@ -229,19 +230,19 @@ the location at which the API is hosted, for example
 <h2>Listing all accounts<a class="headerlink" href="#listing-all-accounts" title="Permalink to this headline">¶</a></h2>
 <p>You can list all accounts using <code class="docutils literal notranslate"><span class="pre">list_accounts</span></code>. For example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_accounts</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You can also get results a page at a time:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">accounts</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_accounts</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">accounts</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">search</span></code> and <code class="docutils literal notranslate"><span class="pre">team</span></code> parameters to narrow down results.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Members from team </span><span class="si">{</span><span class="n">team</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> with &quot;bob&quot; in their name:&#39;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">for</span> <span class="n">account</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">list_accounts</span><span class="p">(</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -264,13 +265,13 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <p>Registering a user is a simple call to <code class="docutils literal notranslate"><span class="pre">create_account</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_account</span><span class="p">(</span>
-    <span class="n">discord_id</span><span class="o">=</span><span class="mi">1234567</span><span class="p">,</span>
-    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span>
-    <span class="n">discriminator</span><span class="o">=</span><span class="mi">8472</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="mi">1234567</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span>
+    <span class="n">discriminator</span><span class="o">=</span><span class="s1">&#39;8472&#39;</span><span class="p">,</span>
     <span class="n">avatar_url</span><span class="o">=</span><span class="s1">&#39;https://picsum.photos/200&#39;</span><span class="p">,</span>
     <span class="n">team</span><span class="o">=</span><span class="n">team</span>
 <span class="p">)</span>
-<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">display_name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
 <span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">team</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span>
 </pre></div>
 </div>
@@ -281,8 +282,9 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 </div>
 <p>You can also chose the permissions to grant the user:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_account</span><span class="p">(</span>
-    <span class="n">discord_id</span><span class="o">=</span><span class="mi">1234567</span><span class="p">,</span>
-    <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span>
+    <span class="nb">id</span><span class="o">=</span><span class="mi">1234567</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span>
+    <span class="n">discriminator</span><span class="o">=</span><span class="s1">&#39;8472&#39;</span><span class="p">,</span>
     <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">,</span>
     <span class="n">permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span>
         <span class="n">manage_teams</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">manage_account_details</span><span class="o">=</span><span class="kc">True</span>
@@ -307,9 +309,9 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <p>Editing a user’s account can be done with <code class="docutils literal notranslate"><span class="pre">update_account</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">41129492792313</span><span class="p">)</span>
 <span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
-   <span class="n">account</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span> <span class="n">discriminator</span><span class="o">=</span><span class="mi">1231</span>
+   <span class="n">account</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Artemis&#39;</span><span class="p">,</span> <span class="n">discriminator</span><span class="o">=</span><span class="s1">&#39;1231&#39;</span>
 <span class="p">)</span>
-<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">display_name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
+<span class="k">assert</span> <span class="n">account</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Artemis&#39;</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -399,13 +401,12 @@ with the <code class="docutils literal notranslate"><span class="pre">manage_own
 given team.</p>
 </div>
 </div>
-<div class="section" id="create-a-user-auth-session">
-<h2>Create a user auth session<a class="headerlink" href="#create-a-user-auth-session" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="creating-a-user-auth-session">
+<h2>Creating a user auth session<a class="headerlink" href="#creating-a-user-auth-session" title="Permalink to this headline">¶</a></h2>
 <p>An <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> can create user sessions, which can in turn be used by a
 <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> as authentication. More usefully, user session can be passed
 to the frontend, so that the user they are for can manipulate the API
-client-side. Since an attacker intercepting these credentials could
-authenticate as the user, these have a short lifetime, by default 30 minutes.</p>
+client-side.</p>
 <p>Example:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">1318219824080</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_session</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
@@ -419,48 +420,52 @@ authenticate as the user, these have a short lifetime, by default 30 minutes.</p
 permission.</p>
 </div>
 </div>
-<div class="section" id="reset-the-client-s-token">
-<h2>Reset the client’s token<a class="headerlink" href="#reset-the-client-s-token" title="Permalink to this headline">¶</a></h2>
-<p>The token of an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> can be reset using <code class="docutils literal notranslate"><span class="pre">reset_token</span></code>. Note that the
-client <em>will</em> automatically update to use the new token. This function returns
-an <code class="docutils literal notranslate"><span class="pre">AppCredentials</span></code> object, which can be used in place of credentials,
-and also provides the attribute <code class="docutils literal notranslate"><span class="pre">display_name</span></code>, which is the
-human-readable name of the app.</p>
+<div class="section" id="authenticating-via-discord-oauth2">
+<h2>Authenticating via Discord OAuth2<a class="headerlink" href="#authenticating-via-discord-oauth2" title="Permalink to this headline">¶</a></h2>
+<p>Alternatively, you can use a Discord user authentication token to create a
+user session (these can be obtained using Discord OAuth2, which is beyond the
+scope of this library). This has the advantage that you do not need to be
+otherwise authenticated, so it can be used on the frontend (eg. with the OAuth2
+implicit grant flow).</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">discord_authenticate</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="n">user_client</span> <span class="o">=</span> <span class="n">UserClient</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the token used must be authorised for the <code class="docutils literal notranslate"><span class="pre">identify</span></code> scope.</p>
+</div>
+<div class="section" id="resetting-the-client-s-token">
+<h2>Resetting the client’s token<a class="headerlink" href="#resetting-the-client-s-token" title="Permalink to this headline">¶</a></h2>
+<p>The token of an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> can be reset using
+<code class="docutils literal notranslate"><span class="pre">reset_token</span></code>. Note that the client <em>will</em> automatically update to use the
+new token. This function returns an <code class="docutils literal notranslate"><span class="pre">AppCredentials</span></code> object for an
+<code class="docutils literal notranslate"><span class="pre">AppClient</span></code>, or a <code class="docutils literal notranslate"><span class="pre">Session</span></code> object for a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>, either of which
+can be used in place of credentials, and also provide some metadata.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">reset_token</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> (you cannot reset a user token, since
-they are short-lived anyway).</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>.</p>
 </div>
 </div>
-<div class="section" id="get-the-authenticated-app">
-<h2>Get the authenticated app<a class="headerlink" href="#get-the-authenticated-app" title="Permalink to this headline">¶</a></h2>
-<p>When authenticated with an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">get_app</span></code> to get
+<div class="section" id="getting-the-authenticated-app">
+<h2>Getting the authenticated app<a class="headerlink" href="#getting-the-authenticated-app" title="Permalink to this headline">¶</a></h2>
+<p>When authenticated with an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">get_self</span></code> to get
 metadata on the authenticated app. Note that unlike <code class="docutils literal notranslate"><span class="pre">reset_token</span></code>, this
 does <em>not</em> return the app’s new token.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_app</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_self</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>.</p>
 </div>
 </div>
 <div class="section" id="getting-the-authenticated-user">
 <h2>Getting the authenticated user<a class="headerlink" href="#getting-the-authenticated-user" title="Permalink to this headline">¶</a></h2>
 <p>A <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> can get the account of the user it has authenticated as
-using the <code class="docutils literal notranslate"><span class="pre">get_self</span></code> method:</p>
+using the same method:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_self</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This requires a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>, since an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> has no associated
-user.</p>
 </div>
 </div>
 <div class="section" id="closing-the-connection">
