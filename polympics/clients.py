@@ -10,7 +10,9 @@ from .types import (
 )
 
 
-__all__ = ('UnauthenticatedClient', 'AppClient', 'UserClient')
+__all__ = ('UnauthenticatedClient', 'AppClient', 'UserClient', 'NO_TEAM')
+
+NO_TEAM = object()
 
 
 class UnauthenticatedClient:
@@ -146,7 +148,10 @@ class AuthenticatedClient(UnauthenticatedClient):
         if avatar_url:
             data['avatar_url'] = avatar_url
         if team:
-            data['team'] = team.id
+            if team == NO_TEAM:
+                data['team'] = 0
+            else:
+                data['team'] = team.id
         if grant_permissions:
             data['grant_permissions'] = grant_permissions.to_int()
         if revoke_permissions:
