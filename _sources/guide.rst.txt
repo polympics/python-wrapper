@@ -179,9 +179,20 @@ You can similarly update a user's team:
 .. note::
 
    This requires an ``AppClient`` or ``UserClient`` with the
-   ``manage_account_teams`` permission, or just a ``UserClient``
-   with the ``manage_own_team`` permission who is a member of the
-   given team.
+   ``manage_account_teams`` permission, or a ``UserClient`` authenticated
+   with the given account.
+
+Or you can remove a user from a team, using the ``NO_TEAM`` constant:
+
+.. code-block:: python
+
+   await client.update_account(account, team=polympics.NO_TEAM)
+
+.. note::
+
+   This requires permissions as explained above for adding a user to a team,
+   with the addition that you can remove a user from a team if you are a member
+   of that team and have the ``manage_own_team`` permission.
 
 You can also update user permissions with the ``grant_permissions``
 and ``revoke_permissions`` args, subject to the rules outlined in

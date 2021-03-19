@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.4.0 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.4.1 documentation</title>
   
 
   
@@ -326,9 +326,18 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
-<code class="docutils literal notranslate"><span class="pre">manage_account_teams</span></code> permission, or just a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>
-with the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission who is a member of the
-given team.</p>
+<code class="docutils literal notranslate"><span class="pre">manage_account_teams</span></code> permission, or a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> authenticated
+with the given account.</p>
+</div>
+<p>Or you can remove a user from a team, using the <code class="docutils literal notranslate"><span class="pre">NO_TEAM</span></code> constant:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">polympics</span><span class="o">.</span><span class="n">NO_TEAM</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires permissions as explained above for adding a user to a team,
+with the addition that you can remove a user from a team if you are a member
+of that team and have the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission.</p>
 </div>
 <p>You can also update user permissions with the <code class="docutils literal notranslate"><span class="pre">grant_permissions</span></code>
 and <code class="docutils literal notranslate"><span class="pre">revoke_permissions</span></code> args, subject to the rules outlined in
