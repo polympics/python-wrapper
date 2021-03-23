@@ -112,6 +112,36 @@ class UnauthenticatedClient:
         """Close the connection."""
         await self.client.close()
 
+    async def update_account(
+            self, account: Account, name: str = None,
+            discriminator: int = None, avatar_url: str = None,
+            team: Team = None, grant_permissions: Permissions = None,
+            revoke_permissions: Permissions = None,
+            discord_token: str = None) -> Account:
+        """Edit an account."""
+        data = {}
+        if name:
+            data['name'] = name
+        if discriminator:
+            data['discriminator'] = discriminator
+        if avatar_url:
+            data['avatar_url'] = avatar_url
+        if team:
+            if team == NO_TEAM:
+                data['team'] = 0
+            else:
+                data['team'] = team.id
+        if grant_permissions:
+            data['grant_permissions'] = grant_permissions.to_int()
+        if revoke_permissions:
+            data['revoke_permissions'] = revoke_permissions.to_int()
+        if discord_token:
+            data['discord_token'] = discord_token
+        return await self.request(
+            'PATCH', f'/account/{account.id}', json=data,
+            response_type=Account
+        )
+
 
 class AuthenticatedClient(UnauthenticatedClient):
     """Client that adds endpoints only available when authenticated.
@@ -133,33 +163,6 @@ class AuthenticatedClient(UnauthenticatedClient):
             'team': team.id if team else None,
             'permissions': permissions.to_int() if permissions else 0
         }, response_type=Account)
-
-    async def update_account(
-            self, account: Account, name: str = None,
-            discriminator: int = None, avatar_url: str = None,
-            team: Team = None, grant_permissions: Permissions = None,
-            revoke_permissions: Permissions = None) -> Account:
-        """Edit an account."""
-        data = {}
-        if name:
-            data['name'] = name
-        if discriminator:
-            data['discriminator'] = discriminator
-        if avatar_url:
-            data['avatar_url'] = avatar_url
-        if team:
-            if team == NO_TEAM:
-                data['team'] = 0
-            else:
-                data['team'] = team.id
-        if grant_permissions:
-            data['grant_permissions'] = grant_permissions.to_int()
-        if revoke_permissions:
-            data['revoke_permissions'] = revoke_permissions.to_int()
-        return await self.request(
-            'PATCH', f'/account/{account.id}', json=data,
-            response_type=Account
-        )
 
     async def delete_account(self, account: Account):
         """Delete an account."""

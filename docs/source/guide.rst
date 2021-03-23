@@ -207,6 +207,16 @@ Example:
        revoke_permissions=Permissions(manage_teams=True)
    )
 
+Using the ``discord_token`` parameter, you can update a user's name,
+discriminator and avatar URL to match Discord. This requires no permissions,
+since user tokens can be authenticated with Discord.
+
+Example:
+
+.. code-block:: python
+
+   await client.update_account(account, discord_token=token)
+
 Deleting an account
 -------------------
 
@@ -220,7 +230,8 @@ You can delete a user's account with the ``delete_account`` method:
 .. note::
 
    This requires an ``AppClient`` or ``UserClient`` with the
-   ``manage_account_details`` permission.
+   ``manage_account_details`` permission, or just a ``UserClient`` associated
+   with the given account.
 
 Creating a team
 ---------------
