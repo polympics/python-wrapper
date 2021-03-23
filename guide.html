@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.4.1 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.4.2 documentation</title>
   
 
   
@@ -349,6 +349,13 @@ and <code class="docutils literal notranslate"><span class="pre">revoke_permissi
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">discord_token</span></code> parameter, you can update a user’s name,
+discriminator and avatar URL to match Discord. This requires no permissions,
+since user tokens can be authenticated with Discord.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">discord_token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="deleting-an-account">
 <h2>Deleting an account<a class="headerlink" href="#deleting-an-account" title="Permalink to this headline">¶</a></h2>
@@ -360,7 +367,8 @@ and <code class="docutils literal notranslate"><span class="pre">revoke_permissi
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
-<code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission.</p>
+<code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission, or just a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> associated
+with the given account.</p>
 </div>
 </div>
 <div class="section" id="creating-a-team">
