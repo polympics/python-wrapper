@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.4.2 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.5.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -89,6 +92,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-client">Creating a client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-an-account">Getting an account</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-a-team">Getting a team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-an-award">Getting an award</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listing-all-accounts">Listing all accounts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listing-all-teams">Listing all teams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-an-account">Creating an account</a></li>
@@ -97,6 +101,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-team">Creating a team</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#editing-a-team">Editing a team</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deleting-a-team">Deleting a team</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-an-award">Creating an award</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#editing-an-award">Editing an award</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-an-award">Deleting an award</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#giving-an-award-to-a-user">Giving an award to a user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#taking-an-award-from-a-user">Taking an award from a user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-user-auth-session">Creating a user auth session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#authenticating-via-discord-oauth2">Authenticating via Discord OAuth2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#resetting-the-client-s-token">Resetting the client’s token</a></li>
@@ -226,6 +235,17 @@ the location at which the API is hosted, for example
 </pre></div>
 </div>
 </div>
+<div class="section" id="getting-an-award">
+<h2>Getting an award<a class="headerlink" href="#getting-an-award" title="Permalink to this headline">¶</a></h2>
+<p>You can get an award by ID using the <code class="docutils literal notranslate"><span class="pre">get_award</span></code> method. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_award</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">award</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">award</span><span class="o">.</span><span class="n">image_url</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">awardee</span> <span class="ow">in</span> <span class="n">award</span><span class="o">.</span><span class="n">awardees</span><span class="p">:</span>
+    <span class="c1"># awardee is an Account object.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">awardee</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="listing-all-accounts">
 <h2>Listing all accounts<a class="headerlink" href="#listing-all-accounts" title="Permalink to this headline">¶</a></h2>
 <p>You can list all accounts using <code class="docutils literal notranslate"><span class="pre">list_accounts</span></code>. For example:</p>
@@ -256,7 +276,7 @@ the location at which the API is hosted, for example
 <p>This supports the same pagination system as <code class="docutils literal notranslate"><span class="pre">list_accounts</span></code>, as well
 as the <code class="docutils literal notranslate"><span class="pre">search</span></code> parameter:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">teams</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_teams</span><span class="p">(</span><span class="n">search</span><span class="o">=</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">([</span><span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">teams</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">teams</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
@@ -320,7 +340,7 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <code class="docutils literal notranslate"><span class="pre">manage_account_details</span></code> permission.</p>
 </div>
 <p>You can similarly update a user’s team:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -330,7 +350,7 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 with the given account.</p>
 </div>
 <p>Or you can remove a user from a team, using the <code class="docutils literal notranslate"><span class="pre">NO_TEAM</span></code> constant:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">polympics</span><span class="o">.</span><span class="n">NO_TEAM</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">polympics</span><span class="o">.</span><span class="n">NO_TEAM</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -343,7 +363,7 @@ of that team and have the <code class="docutils literal notranslate"><span class
 and <code class="docutils literal notranslate"><span class="pre">revoke_permissions</span></code> args, subject to the rules outlined in
 “Creating an account”.</p>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span>
     <span class="n">account</span><span class="p">,</span> <span class="n">grant_permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span><span class="n">manage_own_team</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
     <span class="n">revoke_permissions</span><span class="o">=</span><span class="n">Permissions</span><span class="p">(</span><span class="n">manage_teams</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="p">)</span>
@@ -353,7 +373,7 @@ and <code class="docutils literal notranslate"><span class="pre">revoke_permissi
 discriminator and avatar URL to match Discord. This requires no permissions,
 since user tokens can be authenticated with Discord.</p>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">discord_token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_account</span><span class="p">(</span><span class="n">account</span><span class="p">,</span> <span class="n">discord_token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -416,6 +436,55 @@ argument, the team to delete:</p>
 <code class="docutils literal notranslate"><span class="pre">manage_teams</span></code> permission, or just a <code class="docutils literal notranslate"><span class="pre">UserClient</span></code>
 with the <code class="docutils literal notranslate"><span class="pre">manage_own_team</span></code> permission who is a member of the
 given team.</p>
+</div>
+</div>
+<div class="section" id="creating-an-award">
+<h2>Creating an award<a class="headerlink" href="#creating-an-award" title="Permalink to this headline">¶</a></h2>
+<p>You can create an award with the <code class="docutils literal notranslate"><span class="pre">create_award</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account_1</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">508140149014901</span><span class="p">)</span>
+<span class="n">team</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_team</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_award</span><span class="p">(</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Perfect 10 Gold&#39;</span><span class="p">,</span>
+    <span class="n">image_url</span><span class="o">=</span><span class="s1">&#39;https://link.to/icon.png&#39;</span><span class="p">,</span>
+    <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">,</span>
+    <span class="n">accounts</span><span class="o">=</span><span class="p">[</span><span class="n">account_1</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">award</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">award</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="editing-an-award">
+<h2>Editing an award<a class="headerlink" href="#editing-an-award" title="Permalink to this headline">¶</a></h2>
+<p>You can edit an award with the <code class="docutils literal notranslate"><span class="pre">update_award</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_award</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_award</span><span class="p">(</span><span class="n">award</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gold - Perfect 10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-an-award">
+<h2>Deleting an award<a class="headerlink" href="#deleting-an-award" title="Permalink to this headline">¶</a></h2>
+<p>You can delete an award with the <code class="docutils literal notranslate"><span class="pre">delete_award</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_award</span><span class="p">(</span><span class="mi">52</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">delete_award</span><span class="p">(</span><span class="n">award</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="giving-an-award-to-a-user">
+<h2>Giving an award to a user<a class="headerlink" href="#giving-an-award-to-a-user" title="Permalink to this headline">¶</a></h2>
+<p>You can give a user an existing award with the <code class="docutils literal notranslate"><span class="pre">give_award</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">130914109419411</span><span class="p">)</span>
+<span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_award</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">give_award</span><span class="p">(</span><span class="n">award</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="taking-an-award-from-a-user">
+<h2>Taking an award from a user<a class="headerlink" href="#taking-an-award-from-a-user" title="Permalink to this headline">¶</a></h2>
+<p>You can take an award away from a user that has it with the <code class="docutils literal notranslate"><span class="pre">take_award</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">account</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_account</span><span class="p">(</span><span class="mi">8713710931790741</span><span class="p">)</span>
+<span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_award</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">take_award</span><span class="p">(</span><span class="n">award</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="creating-a-user-auth-session">
