@@ -61,6 +61,19 @@ You can get a team by ID using ``get_team``. For example:
    print(team.name)
    print(team.member_count)
 
+Getting an award
+----------------
+
+You can get an award by ID using the ``get_award`` method. For example:
+
+.. code-block:: python
+
+   award = await client.get_award(42)
+   print(award.title, award.image_url)
+   for awardee in award.awardees:
+       # awardee is an Account object.
+       print(awardee.name)
+
 Listing all accounts
 --------------------
 
@@ -83,9 +96,9 @@ You can use the ``search`` and ``team`` parameters to narrow down results.
 
 .. code-block:: python
 
-    print(f'Members from team {team.name} with "bob" in their name:')
-    async for account in client.list_accounts('bob', team=team):
-        print(account.name)
+   print(f'Members from team {team.name} with "bob" in their name:')
+   async for account in client.list_accounts('bob', team=team):
+       print(account.name)
 
 Listing all teams
 -----------------
@@ -103,7 +116,7 @@ as the ``search`` parameter:
 .. code-block:: python
 
    teams = client.list_teams(search='foo')
-   print([team.name for team in await teams.get_page(0)]
+   print([team.name for team in await teams.get_page(0)])
 
 Creating an account
 -------------------
@@ -174,7 +187,7 @@ You can similarly update a user's team:
 
 .. code-block:: python
 
-   await client.update_account(account, team=team)
+   account = await client.update_account(account, team=team)
 
 .. note::
 
@@ -186,7 +199,7 @@ Or you can remove a user from a team, using the ``NO_TEAM`` constant:
 
 .. code-block:: python
 
-   await client.update_account(account, team=polympics.NO_TEAM)
+   account = await client.update_account(account, team=polympics.NO_TEAM)
 
 .. note::
 
@@ -202,7 +215,7 @@ Example:
 
 .. code-block:: python
 
-   await client.update_account(
+   account = await client.update_account(
        account, grant_permissions=Permissions(manage_own_team=True),
        revoke_permissions=Permissions(manage_teams=True)
    )
@@ -215,7 +228,7 @@ Example:
 
 .. code-block:: python
 
-   await client.update_account(account, discord_token=token)
+   account = await client.update_account(account, discord_token=token)
 
 Deleting an account
 -------------------
@@ -285,6 +298,65 @@ argument, the team to delete:
    ``manage_teams`` permission, or just a ``UserClient``
    with the ``manage_own_team`` permission who is a member of the
    given team.
+
+Creating an award
+-----------------
+
+You can create an award with the ``create_award`` method:
+
+.. code-block:: python
+
+   account_1 = await client.get_account(508140149014901)
+   team = await client.get_team(123)
+   award = await client.create_award(
+       title='Perfect 10 Gold',
+       image_url='https://link.to/icon.png',
+       team=team,
+       accounts=[account_1]
+   )
+   print(award.id, award.title)
+
+Editing an award
+----------------
+
+You can edit an award with the ``update_award`` method:
+
+.. code-block:: python
+
+   award = await client.get_award(12)
+   award = await client.update_award(award, title='Gold - Perfect 10')
+
+Deleting an award
+-----------------
+
+You can delete an award with the ``delete_award`` method:
+
+.. code-block:: python
+
+   award = await client.get_award(52)
+   await client.delete_award(award)
+
+Giving an award to a user
+-------------------------
+
+You can give a user an existing award with the ``give_award`` method:
+
+.. code-block:: python
+
+   account = await client.get_account(130914109419411)
+   award = await client.get_award(19)
+   await client.give_award(award, account)
+
+Taking an award from a user
+---------------------------
+
+You can take an award away from a user that has it with the ``take_award`` method:
+
+.. code-block:: python
+
+   account = await client.get_account(8713710931790741)
+   award = await client.get_award(13)
+   await client.take_award(award, account)
 
 Creating a user auth session
 ----------------------------

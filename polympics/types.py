@@ -9,8 +9,17 @@ from dataclasses_json import DataClassJsonMixin, config, dataclass_json
 
 
 __all__ = (
-    'Account', 'App', 'AppCredentials', 'ClientError', 'Credentials',
-    'DataError', 'Permissions', 'PolympicsError', 'ServerError', 'Session',
+    'Account',
+    'App',
+    'AppCredentials',
+    'Award',
+    'ClientError',
+    'Credentials',
+    'DataError',
+    'Permissions',
+    'PolympicsError',
+    'ServerError',
+    'Session',
     'Team'
 )
 
@@ -25,6 +34,7 @@ class Permissions:
     manage_teams: bool = False
     authenticate_users: bool = False
     manage_own_team: bool = False
+    manage_awards: bool = False
 
     @classmethod
     def from_int(cls, value: int) -> Permissions:
@@ -43,7 +53,8 @@ class Permissions:
             self.manage_account_details,
             self.manage_teams,
             self.authenticate_users,
-            self.manage_own_team
+            self.manage_own_team,
+            self.manage_awards
         ]
 
     def to_int(self) -> int:
@@ -113,6 +124,7 @@ class Team:
     name: str
     created_at: datetime
     member_count: int
+    awards: list[Award]
 
 
 @dataclass
@@ -127,6 +139,7 @@ class Account(DataClassJsonMixin):
         encoder=Permissions.to_int,
         decoder=Permissions.from_int
     ))
+    awards: list[Award]
     avatar_url: Optional[str] = None
     team: Optional[Team] = None
 
@@ -136,6 +149,18 @@ class Account(DataClassJsonMixin):
         account = super().from_dict(data)
         account.id = int(account.id)
         return account
+
+
+@dataclass_json
+@dataclass
+class Award:
+    """An award returned by the API."""
+
+    id: int
+    title: str
+    image_url: str
+    # Will be present for Client.get_award but no other time.
+    awardees: Optional[list[Account]] = None
 
 
 @dataclass_json

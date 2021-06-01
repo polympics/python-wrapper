@@ -5,8 +5,17 @@ import aiohttp
 
 from .pagination import Paginator
 from .types import (
-    Account, App, AppCredentials, ClientError, Credentials, DataError,
-    Permissions, ServerError, Session, Team
+    Account,
+    App,
+    AppCredentials,
+    Award,
+    ClientError,
+    Credentials,
+    DataError,
+    Permissions,
+    ServerError,
+    Session,
+    Team
 )
 
 
@@ -16,7 +25,7 @@ NO_TEAM = object()
 
 
 class UnauthenticatedClient:
-    """A client for making un-, user- or app-authenitcated requests."""
+    """A client for making un-, user- or app-authenticated requests."""
 
     def __init__(
             self, credentials: Optional[Credentials] = None,
@@ -38,25 +47,31 @@ class UnauthenticatedClient:
         return self.client
 
     async def handle_response(
-            self, response: aiohttp.ClientResponse,
-            data_type: Any = None) -> dict[str, Any]:
+            self,
+            response: aiohttp.ClientResponse,
+            data_type: Any = dict) -> Any:
         """Process a response from the API."""
         if response.status == 500:
             raise ServerError(500)
         if response.status == 204:
-            return {}
+            return None
+        if response.ok and not data_type:
+            return
         data = await response.json()
         if response.ok:
-            if data_type:
-                return data_type.from_dict(data)
-            return data
+            if data_type == dict:
+                return data
+            return data_type.from_dict(data)
         elif response.status == 422:
             raise DataError(422, data['detail'])
         else:
             raise ClientError(response.status, data['detail'])
 
     async def request(
-            self, method: str, path: str, response_type: Any = None,
+            self,
+            method: str,
+            path: str,
+            response_type: Any = dict,
             **kwargs: dict[str, Any]) -> Any:
         """Make a request to the API."""
         client = await self.get_client()
@@ -113,9 +128,13 @@ class UnauthenticatedClient:
         await self.client.close()
 
     async def update_account(
-            self, account: Account, name: str = None,
-            discriminator: int = None, avatar_url: str = None,
-            team: Team = None, grant_permissions: Permissions = None,
+            self,
+            account: Account,
+            name: str = None,
+            discriminator: int = None,
+            avatar_url: str = None,
+            team: Team = None,
+            grant_permissions: Permissions = None,
             revoke_permissions: Permissions = None,
             discord_token: str = None) -> Account:
         """Edit an account."""
@@ -142,6 +161,13 @@ class UnauthenticatedClient:
             response_type=Account
         )
 
+    async def get_award(self, award_id: int) -> Award:
+        """Get an award by ID."""
+        data = await self.request('GET', f'/award/{award_id}')
+        award = Award.from_dict(data['award'])
+        award.awardees = [Account.from_dict(raw) for raw in data['awardees']]
+        return award
+
 
 class AuthenticatedClient(UnauthenticatedClient):
     """Client that adds endpoints only available when authenticated.
@@ -151,8 +177,12 @@ class AuthenticatedClient(UnauthenticatedClient):
     """
 
     async def create_account(
-            self, id: int, name: str, discriminator: int,
-            avatar_url: Optional[str] = None, team: Optional[Team] = None,
+            self,
+            id: int,
+            name: str,
+            discriminator: int,
+            avatar_url: Optional[str] = None,
+            team: Optional[Team] = None,
             permissions: Optional[Permissions] = None) -> Account:
         """Create a new account."""
         return await self.request('POST', '/accounts/new', json={
@@ -184,6 +214,51 @@ class AuthenticatedClient(UnauthenticatedClient):
     async def delete_team(self, team: Team):
         """Delete a team."""
         await self.request('DELETE', f'/team/{team.id}')
+
+    async def create_award(
+            self,
+            title: str,
+            image_url: str,
+            team: Team,
+            accounts: list[Account]) -> Award:
+        """Create a new award."""
+        return await self.request('POST', '/awards/new', Award, json={
+            'title': title,
+            'image_url': image_url,
+            'team': team.id,
+            'accounts': [account.id for account in accounts]
+        })
+
+    async def update_award(
+            self,
+            award: Award,
+            *,
+            title: Optional[str] = None,
+            image_url: Optional[str] = None,
+            team: Optional[Team] = None) -> Award:
+        """Edit an award."""
+        return await self.request('PATCH', f'/award/{award.id}', Award, json={
+            'title': title,
+            'image_url': image_url,
+            'team': team.id if team else None
+        })
+
+    async def delete_award(self, award: Award):
+        """Delete an award."""
+        await self.request('DELETE', f'/award/{award.id}')
+
+    async def give_award(self, award: Award, account: Account):
+        """Give an existing award to a user."""
+        await self.request(
+            'PUT', f'/account/{account.id}/award/{award.id}',
+            response_type=None
+        )
+
+    async def take_award(self, award: Award, account: Account):
+        """Take an award from a user."""
+        await self.request(
+            'DELETE', f'/account/{account.id}/award/{award.id}'
+        )
 
 
 class AppClient(AuthenticatedClient):
