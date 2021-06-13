@@ -166,6 +166,7 @@ class UnauthenticatedClient:
         data = await self.request('GET', f'/award/{award_id}')
         award = Award.from_dict(data['award'])
         award.awardees = [Account.from_dict(raw) for raw in data['awardees']]
+        award.team = Team.from_dict(data['team']) if data['team'] else None
         return award
 
 

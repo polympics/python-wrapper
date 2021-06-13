@@ -161,6 +161,8 @@ class Award:
     image_url: str
     # Will be present for Client.get_award but no other time.
     awardees: Optional[list[Account]] = None
+    # As above but may still be None if the award is not for a team.
+    team: Optional[Team] = None
 
 
 @dataclass_json
