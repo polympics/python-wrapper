@@ -9,9 +9,11 @@ from .types import (
     App,
     AppCredentials,
     Award,
+    Callback,
     ClientError,
     Credentials,
     DataError,
+    EventType,
     Permissions,
     ServerError,
     Session,
@@ -282,6 +284,32 @@ class AppClient(AuthenticatedClient):
     async def get_self(self) -> App:
         """Get metadata on the authenticated app."""
         return await self.request('GET', '/auth/me', App)
+
+    async def get_callbacks(self) -> dict[EventType, str]:
+        """Get all callbacks registered for this app.
+
+        Returns a dict of event type to callback URL.
+        """
+        data = (await self.request('GET', '/callbacks'))['callbacks']
+        return {EventType(evt): url for evt, url in data.items()}
+
+    async def get_callback(self, event: EventType) -> Callback:
+        """Get the callback registered for this app for a given event."""
+        return await self.request('GET', f'/callback/{event.value}', Callback)
+
+    async def delete_callback(self, event: EventType):
+        """Delete the callback registered for this app for a given event."""
+        await self.request('DELETE', f'/callback/{event.value}')
+
+    async def create_callback(
+            self, event: EventType, url: str, secret: str) -> Callback:
+        """Register a callback for this app for a given event."""
+        return await self.request(
+            'PUT',
+            f'/callback/{event.value}',
+            Callback,
+            json={'url': url, 'secret': secret}
+        )
 
 
 class UserClient(AuthenticatedClient):

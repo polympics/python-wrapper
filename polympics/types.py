@@ -1,6 +1,7 @@
 """Dataclasses to represent the various types returned by the API."""
 from __future__ import annotations
 
+import enum
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Optional
@@ -10,12 +11,15 @@ from dataclasses_json import DataClassJsonMixin, config, dataclass_json
 
 __all__ = (
     'Account',
+    'AccountTeamUpdateEvent',
     'App',
     'AppCredentials',
     'Award',
+    'Callback',
     'ClientError',
     'Credentials',
     'DataError',
+    'EventType',
     'Permissions',
     'PolympicsError',
     'ServerError',
@@ -163,6 +167,34 @@ class Award:
     awardees: Optional[list[Account]] = None
     # As above but may still be None if the award is not for a team.
     team: Optional[Team] = None
+
+
+class EventType(enum.Enum):
+    """An event type for a callback."""
+
+    ACCOUNT_TEAM_UPDATE = 'account_team_update'
+
+
+@dataclass_json
+@dataclass
+class Callback:
+    """A callback returned by the API."""
+
+    id: int
+    url: str
+    event: EventType = field(metadata=config(
+        encoder=lambda ev: ev.value,
+        decoder=EventType
+    ))
+
+
+@dataclass_json
+@dataclass
+class AccountTeamUpdateEvent:
+    """An event for when an account's team is changed."""
+
+    account: Account
+    team: Optional[Team]
 
 
 @dataclass_json
