@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.5.1 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.6.0 documentation</title>
   
 
   
@@ -106,6 +106,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#deleting-an-award">Deleting an award</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#giving-an-award-to-a-user">Giving an award to a user</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#taking-an-award-from-a-user">Taking an award from a user</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#registering-a-callback">Registering a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listing-all-callbacks">Listing all callbacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-a-specific-callback">Getting a specific callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-a-callback">Deleting a callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-a-callback-event">Handling a callback event</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-a-user-auth-session">Creating a user auth session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#authenticating-via-discord-oauth2">Authenticating via Discord OAuth2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#resetting-the-client-s-token">Resetting the client’s token</a></li>
@@ -452,6 +457,11 @@ given team.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">award</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">award</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_awards</span></code> permission.</p>
+</div>
 </div>
 <div class="section" id="editing-an-award">
 <h2>Editing an award<a class="headerlink" href="#editing-an-award" title="Permalink to this headline">¶</a></h2>
@@ -460,6 +470,11 @@ given team.</p>
 <span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">update_award</span><span class="p">(</span><span class="n">award</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Gold - Perfect 10&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_awards</span></code> permission.</p>
+</div>
 </div>
 <div class="section" id="deleting-an-award">
 <h2>Deleting an award<a class="headerlink" href="#deleting-an-award" title="Permalink to this headline">¶</a></h2>
@@ -467,6 +482,11 @@ given team.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">award</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_award</span><span class="p">(</span><span class="mi">52</span><span class="p">)</span>
 <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">delete_award</span><span class="p">(</span><span class="n">award</span><span class="p">)</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_awards</span></code> permission.</p>
 </div>
 </div>
 <div class="section" id="giving-an-award-to-a-user">
@@ -477,6 +497,11 @@ given team.</p>
 <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">give_award</span><span class="p">(</span><span class="n">award</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_awards</span></code> permission.</p>
+</div>
 </div>
 <div class="section" id="taking-an-award-from-a-user">
 <h2>Taking an award from a user<a class="headerlink" href="#taking-an-award-from-a-user" title="Permalink to this headline">¶</a></h2>
@@ -486,6 +511,72 @@ given team.</p>
 <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">take_award</span><span class="p">(</span><span class="n">award</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code> or <code class="docutils literal notranslate"><span class="pre">UserClient</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">manage_awards</span></code> permission.</p>
+</div>
+</div>
+<div class="section" id="registering-a-callback">
+<h2>Registering a callback<a class="headerlink" href="#registering-a-callback" title="Permalink to this headline">¶</a></h2>
+<p>You can register an HTTP callback for a specific event type (currently only <code class="docutils literal notranslate"><span class="pre">account_team_update</span></code>) using the <code class="docutils literal notranslate"><span class="pre">create_callback</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">create_callback</span><span class="p">(</span>
+    <span class="n">event</span><span class="o">=</span><span class="n">EventType</span><span class="o">.</span><span class="n">account_team_update</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://example.com/fake_callback&#39;</span><span class="p">,</span>
+    <span class="n">secret</span><span class="o">=</span><span class="s1">&#39;obviously-dont-use-this&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>. It will overwrite any existing callback for this event type.</p>
+</div>
+</div>
+<div class="section" id="listing-all-callbacks">
+<h2>Listing all callbacks<a class="headerlink" href="#listing-all-callbacks" title="Permalink to this headline">¶</a></h2>
+<p>You can list all callbacks registered for your app using the <code class="docutils literal notranslate"><span class="pre">get_callbacks</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">callbacks</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_callbacks</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">cb_url</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cb_url</span><span class="si">}</span><span class="s1"> registered for </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>.</p>
+</div>
+</div>
+<div class="section" id="getting-a-specific-callback">
+<h2>Getting a specific callback<a class="headerlink" href="#getting-a-specific-callback" title="Permalink to this headline">¶</a></h2>
+<p>You can get information on a specific callback using the <code class="docutils literal notranslate"><span class="pre">get_callback</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">callback</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get_callback</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">account_team_update</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">callback</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">callback</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">callback</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>.</p>
+</div>
+</div>
+<div class="section" id="deleting-a-callback">
+<h2>Deleting a callback<a class="headerlink" href="#deleting-a-callback" title="Permalink to this headline">¶</a></h2>
+<p>You can delete the callback for a specific event type using the <code class="docutils literal notranslate"><span class="pre">delete_callback</span></code> method:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">delete_callback</span><span class="p">(</span><span class="n">EventType</span><span class="o">.</span><span class="n">account_team_update</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires an <code class="docutils literal notranslate"><span class="pre">AppClient</span></code>.</p>
+</div>
+</div>
+<div class="section" id="handling-a-callback-event">
+<h2>Handling a callback event<a class="headerlink" href="#handling-a-callback-event" title="Permalink to this headline">¶</a></h2>
+<p>This library does not implement an HTTP server to listen for events, so you will have to implement that yourself. Once you recieve an event, you should make sure that the <code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header is equal to <code class="docutils literal notranslate"><span class="pre">Bearer</span> <span class="pre">&lt;secret&gt;</span></code>, where <code class="docutils literal notranslate"><span class="pre">&lt;secret&gt;</span></code> is the secret you passed to <code class="docutils literal notranslate"><span class="pre">create_callback</span></code>.</p>
+<p>Once you have recieved and validated an event, you can use a handler function to parse the data. The following handler functions are available:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">account_team_update</span></code></p></li>
+</ul>
 </div>
 <div class="section" id="creating-a-user-auth-session">
 <h2>Creating a user auth session<a class="headerlink" href="#creating-a-user-auth-session" title="Permalink to this headline">¶</a></h2>

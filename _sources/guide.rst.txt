@@ -316,6 +316,11 @@ You can create an award with the ``create_award`` method:
    )
    print(award.id, award.title)
 
+.. note::
+
+   This requires an ``AppClient`` or ``UserClient`` with the
+   ``manage_awards`` permission.
+
 Editing an award
 ----------------
 
@@ -326,6 +331,11 @@ You can edit an award with the ``update_award`` method:
    award = await client.get_award(12)
    award = await client.update_award(award, title='Gold - Perfect 10')
 
+.. note::
+
+   This requires an ``AppClient`` or ``UserClient`` with the
+   ``manage_awards`` permission.
+
 Deleting an award
 -----------------
 
@@ -335,6 +345,11 @@ You can delete an award with the ``delete_award`` method:
 
    award = await client.get_award(52)
    await client.delete_award(award)
+
+.. note::
+
+   This requires an ``AppClient`` or ``UserClient`` with the
+   ``manage_awards`` permission.
 
 Giving an award to a user
 -------------------------
@@ -347,6 +362,11 @@ You can give a user an existing award with the ``give_award`` method:
    award = await client.get_award(19)
    await client.give_award(award, account)
 
+.. note::
+
+   This requires an ``AppClient`` or ``UserClient`` with the
+   ``manage_awards`` permission.
+
 Taking an award from a user
 ---------------------------
 
@@ -357,6 +377,81 @@ You can take an award away from a user that has it with the ``take_award`` metho
    account = await client.get_account(8713710931790741)
    award = await client.get_award(13)
    await client.take_award(award, account)
+
+.. note::
+
+   This requires an ``AppClient`` or ``UserClient`` with the
+   ``manage_awards`` permission.
+
+Registering a callback
+----------------------
+
+You can register an HTTP callback for a specific event type (currently only ``account_team_update``) using the ``create_callback`` method.
+
+.. code-block:: python
+
+   await client.create_callback(
+       event=EventType.account_team_update,
+       url='https://example.com/fake_callback',
+       secret='obviously-dont-use-this'
+   )
+
+.. note::
+
+   This requires an ``AppClient``. It will overwrite any existing callback for this event type.
+
+Listing all callbacks
+---------------------
+
+You can list all callbacks registered for your app using the ``get_callbacks`` method:
+
+.. code-block:: python
+
+   callbacks = await client.get_callbacks()
+   for event, cb_url in callbacks.items():
+       print(f'{cb_url} registered for {event.value}')
+
+.. note::
+
+   This requires an ``AppClient``.
+
+Getting a specific callback
+---------------------------
+
+You can get information on a specific callback using the ``get_callback`` method:
+
+.. code-block:: python
+
+   callback = await client.get_callback(EventType.account_team_update)
+   print(callback.id)
+   print(callback.event.value)
+   print(callback.url)
+
+.. note::
+
+   This requires an ``AppClient``.
+
+Deleting a callback
+-------------------
+
+You can delete the callback for a specific event type using the ``delete_callback`` method:
+
+.. code-block:: python
+
+   await client.delete_callback(EventType.account_team_update)
+
+.. note::
+
+   This requires an ``AppClient``.
+
+Handling a callback event
+-------------------------
+
+This library does not implement an HTTP server to listen for events, so you will have to implement that yourself. Once you recieve an event, you should make sure that the ``Authorization`` header is equal to ``Bearer <secret>``, where ``<secret>`` is the secret you passed to ``create_callback``.
+
+Once you have recieved and validated an event, you can use a handler function to parse the data. The following handler functions are available:
+
+- ``account_team_update``
 
 Creating a user auth session
 ----------------------------

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Full API Documentation &mdash; Python Polympics Wrapper 0.5.1 documentation</title>
+  <title>Full API Documentation &mdash; Python Polympics Wrapper 0.6.0 documentation</title>
   
 
   
@@ -164,9 +164,34 @@
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.clients.</span></span><span class="sig-name descname"><span class="pre">AppClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#polympics.types.Credentials" title="polympics.types.Credentials"><span class="pre">polympics.types.Credentials</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'http://127.0.0.1:8000'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.clients.AppClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Client that adds endpoints only available to apps.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="polympics.clients.AppClient.create_callback">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">create_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.EventType" title="polympics.types.EventType"><span class="pre">polympics.types.EventType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secret</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Callback" title="polympics.types.Callback"><span class="pre">polympics.types.Callback</span></a><a class="headerlink" href="#polympics.clients.AppClient.create_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback for this app for a given event.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="polympics.clients.AppClient.create_session">
 <em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">create_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">account</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.Account" title="polympics.types.Account"><span class="pre">polympics.types.Account</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Session" title="polympics.types.Session"><span class="pre">polympics.types.Session</span></a><a class="headerlink" href="#polympics.clients.AppClient.create_session" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a user authentication session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polympics.clients.AppClient.delete_callback">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">delete_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.EventType" title="polympics.types.EventType"><span class="pre">polympics.types.EventType</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.clients.AppClient.delete_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the callback registered for this app for a given event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polympics.clients.AppClient.get_callback">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">get_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.EventType" title="polympics.types.EventType"><span class="pre">polympics.types.EventType</span></a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#polympics.types.Callback" title="polympics.types.Callback"><span class="pre">polympics.types.Callback</span></a><a class="headerlink" href="#polympics.clients.AppClient.get_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the callback registered for this app for a given event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="polympics.clients.AppClient.get_callbacks">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">get_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="headerlink" href="#polympics.clients.AppClient.get_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all callbacks registered for this app.</p>
+<p>Returns a dict of event type to callback URL.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -287,6 +312,12 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="polympics.types.AccountTeamUpdateEvent">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.types.</span></span><span class="sig-name descname"><span class="pre">AccountTeamUpdateEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">account</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.Account" title="polympics.types.Account"><span class="pre">polympics.types.Account</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">team</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#polympics.types.Team" title="polympics.types.Team"><span class="pre">polympics.types.Team</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.AccountTeamUpdateEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>An event for when an account’s team is changed.</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="polympics.types.App">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.types.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.App" title="Permalink to this definition">¶</a></dt>
 <dd><p>Metadata for an app.</p>
@@ -302,6 +333,12 @@
 <dt class="sig sig-object py" id="polympics.types.Award">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.types.</span></span><span class="sig-name descname"><span class="pre">Award</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">awardees</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">team</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#polympics.types.Team" title="polympics.types.Team"><span class="pre">polympics.types.Team</span></a><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.Award" title="Permalink to this definition">¶</a></dt>
 <dd><p>An award returned by the API.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="polympics.types.Callback">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.types.</span></span><span class="sig-name descname"><span class="pre">Callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#polympics.types.EventType" title="polympics.types.EventType"><span class="pre">polympics.types.EventType</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.Callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callback returned by the API.</p>
 </dd></dl>
 
 <dl class="py exception">
@@ -320,6 +357,12 @@
 <dt class="sig sig-object py" id="polympics.types.DataError">
 <em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.types.</span></span><span class="sig-name descname"><span class="pre">DataError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">issues</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.DataError" title="Permalink to this definition">¶</a></dt>
 <dd><p>An error present in the data passed to the server.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="polympics.types.EventType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">polympics.types.</span></span><span class="sig-name descname"><span class="pre">EventType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#polympics.types.EventType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An event type for a callback.</p>
 </dd></dl>
 
 <dl class="py class">
