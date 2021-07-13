@@ -24,7 +24,6 @@ __all__ = (
     'PolympicsError',
     'ServerError',
     'Session',
-    'SignupsStatus',
     'Team'
 )
 
@@ -168,14 +167,6 @@ class Award:
     awardees: Optional[list[Account]] = None
     # As above but may still be None if the award is not for a team.
     team: Optional[Team] = None
-
-
-@dataclass_json
-@dataclass
-class SignupsStatus:
-    """Whether or not signups are open."""
-
-    signups_open: bool
 
 
 class EventType(enum.Enum):

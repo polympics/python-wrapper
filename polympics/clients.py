@@ -17,7 +17,6 @@ from .types import (
     Permissions,
     ServerError,
     Session,
-    SignupsStatus,
     Team
 )
 
@@ -174,7 +173,7 @@ class UnauthenticatedClient:
 
     async def check_signups(self) -> bool:
         """Check if signups are currently open."""
-        data = await self.request('GET', '/accounts/signups', SignupsStatus)
+        data = await self.request('GET', '/accounts/signups')
         return data['signups_open']
 
 
