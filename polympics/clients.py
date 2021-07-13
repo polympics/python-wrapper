@@ -17,6 +17,7 @@ from .types import (
     Permissions,
     ServerError,
     Session,
+    SignupsStatus,
     Team
 )
 
@@ -170,6 +171,11 @@ class UnauthenticatedClient:
         award.awardees = [Account.from_dict(raw) for raw in data['awardees']]
         award.team = Team.from_dict(data['team']) if data['team'] else None
         return award
+
+    async def check_signups(self) -> bool:
+        """Check if signups are currently open."""
+        data = await self.request('GET', '/accounts/signups', SignupsStatus)
+        return data['signups_open']
 
 
 class AuthenticatedClient(UnauthenticatedClient):
