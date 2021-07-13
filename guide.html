@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.6.1 documentation</title>
+  <title>Intro to the Polympics API wrapper &mdash; Python Polympics Wrapper 0.6.2 documentation</title>
   
 
   
@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#getting-an-award">Getting an award</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listing-all-accounts">Listing all accounts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#listing-all-teams">Listing all teams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-if-signups-are-open">Checking if signups are open</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-an-account">Creating an account</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#editing-an-account">Editing an account</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deleting-an-account">Deleting an account</a></li>
@@ -284,6 +285,17 @@ as the <code class="docutils literal notranslate"><span class="pre">search</span
 <span class="nb">print</span><span class="p">([</span><span class="n">team</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="k">await</span> <span class="n">teams</span><span class="o">.</span><span class="n">get_page</span><span class="p">(</span><span class="mi">0</span><span class="p">)])</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="checking-if-signups-are-open">
+<h2>Checking if signups are open<a class="headerlink" href="#checking-if-signups-are-open" title="Permalink to this headline">¶</a></h2>
+<p>Call <code class="docutils literal notranslate"><span class="pre">check_signups</span></code> on any client to check if signups are open:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">check_signups</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Signups are open.&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Signups are closed.)</span>
+</pre></div>
+</div>
+<p>New users will not be allowed to register when signups are closed.</p>
 </div>
 <div class="section" id="creating-an-account">
 <h2>Creating an account<a class="headerlink" href="#creating-an-account" title="Permalink to this headline">¶</a></h2>

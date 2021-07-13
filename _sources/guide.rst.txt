@@ -118,6 +118,20 @@ as the ``search`` parameter:
    teams = client.list_teams(search='foo')
    print([team.name for team in await teams.get_page(0)])
 
+Checking if signups are open
+----------------------------
+
+Call ``check_signups`` on any client to check if signups are open:
+
+.. code-block:: python
+
+   if await client.check_signups():
+       print('Signups are open.')
+   else:
+       print('Signups are closed.)
+
+New users will not be allowed to register when signups are closed.
+
 Creating an account
 -------------------
 
